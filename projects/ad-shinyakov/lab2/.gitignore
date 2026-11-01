@@ -1,0 +1,14 @@
+/data/
+/qdrant_data/
+/evaluation/local_runs/
+.cache/
+.env
+.env.*
+!.env.example
+*.npy
+*.npz
+*.safetensors
+*.gguf
+*.log
+*.tmp
+*.swp

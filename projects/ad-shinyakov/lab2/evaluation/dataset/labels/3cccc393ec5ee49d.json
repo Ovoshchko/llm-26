@@ -1,0 +1,1401 @@
+{
+  "schema_version": 1,
+  "chunk_version": "3cccc393ec5ee49d",
+  "questions_sha256": "a83852b0d8f1d2385293667a1330edd05e41f4f11334b5540e8794040d33a041",
+  "chunks_sha256": "031b35c326d1745a91bb0f234ed683cb0442ca9b177d809499db0ed0ffc2e7cb",
+  "manifest_sha256": "511560e55081e43548ea5e0af7c8c28bc0b628fb969b042d00f129690d5cc8ff",
+  "corpus": {
+    "name": "Kubernetes Concepts",
+    "language": "en",
+    "git_ref": "release-1.35",
+    "source_commit": "8817d358864b70a9710c5ad34f78df6a239be33d"
+  },
+  "chunking": {
+    "splitter": "markdown-library-v8",
+    "config": {
+      "chunk_size": 800,
+      "overlap": 100,
+      "include_headings": false,
+      "splitter": "markdown"
+    },
+    "tokenizer": "Qwen/Qwen3-Embedding-0.6B"
+  },
+  "source_inputs": [
+    {
+      "path": "docs/concepts/architecture/nodes.md",
+      "sha256": "368df61f67dac88630794b222b604a0b07775367ab3aa4c9ab7c3fa8984106e5",
+      "metadata_sha256": "179b1c0a31eeb67a90ce5ce0d65cabdaa30dbe7697c8c932dbc68d9ef9573f1a"
+    },
+    {
+      "path": "docs/concepts/configuration/configmap.md",
+      "sha256": "9b23b1b59c2b8cba09ea14ca6054013dfafd9aaabdaa661b12ddc9114a224ee5",
+      "metadata_sha256": "6a5521c842cf9599e03925afbd5b87ff1886c95304dc5411bcc929e464a7f935"
+    },
+    {
+      "path": "docs/concepts/configuration/manage-resources-containers.md",
+      "sha256": "e7ed0df4b1b087d18437207ed2fcff1f5652ed1f14cfa6af99b203ce4b83102e",
+      "metadata_sha256": "7fd9d7318265ddae326a68d5185639ee21eae74373eacec3e05a998cbe1bfe5e"
+    },
+    {
+      "path": "docs/concepts/configuration/secret.md",
+      "sha256": "70e83bbaf36b15dde02c7b7ec54afce9ec7a9d056c10ed37e0a292e76d9a9e28",
+      "metadata_sha256": "5081440da3d0c4b8fb3d498403ec66c2dec3f5f67f6a7fd504f2a136a640decb"
+    },
+    {
+      "path": "docs/concepts/policy/limit-range.md",
+      "sha256": "3449a9b7c6f4d1d43cdc1de1f7c67313247fafe23e113d01fe240eb6e539f550",
+      "metadata_sha256": "0b4880f55595d05eac4a90da6082caad79bf1c1245d02b653448e0eea46d774a"
+    },
+    {
+      "path": "docs/concepts/services-networking/dns-pod-service.md",
+      "sha256": "770caf62199912fcc6246b9e6149b80689a3a5ab54a16473c4ab1996c07cb360",
+      "metadata_sha256": "3b569f90f18edb76828189082a9459a1de2f96fe2d092954569b06399c7a7de8"
+    },
+    {
+      "path": "docs/concepts/services-networking/endpoint-slices.md",
+      "sha256": "efbd8c006c7b6d58c7a1e8f8eb81d4cd58d84b5ce58dbde24b15c592859241b1",
+      "metadata_sha256": "7e6301635fc1da16a3416d67884c13c8b8c71ab83b3e2a06e8fb35ba14ed8457"
+    },
+    {
+      "path": "docs/concepts/services-networking/network-policies.md",
+      "sha256": "10c5707f1d7060ec3e32753dc2269b217c5762d75074695fd127984e51772e26",
+      "metadata_sha256": "6cf063ec63a95a537a5bf68571ddc34ae4f96e89897ed812df21629772663e72"
+    },
+    {
+      "path": "docs/concepts/services-networking/service.md",
+      "sha256": "bbcca859befedafd93e2dde8d6ef86ba4d7cee0eff75899400a17b86b54782c8",
+      "metadata_sha256": "7c3ba4b874daf205404d0b3fab19bedca330eeccb48ba5e84b45cf1a560242e6"
+    },
+    {
+      "path": "docs/concepts/storage/persistent-volumes.md",
+      "sha256": "fd68f25f9b10b964b4d80e9c66355f71394c20c359d69319bba5b26a1a9f5c64",
+      "metadata_sha256": "2d71dd735026d17c91f50b3be2444e58bb35d4735c2730302c71948b21b327c6"
+    },
+    {
+      "path": "docs/concepts/storage/storage-classes.md",
+      "sha256": "9c54fe037df77d7cc032fe6c0531d4e6282063491b4d3d9db19968bb96eca5ec",
+      "metadata_sha256": "fd65ad9140facb568cd8180f430f8fe06bda54dd65781cfe5326d0a553b189a3"
+    },
+    {
+      "path": "docs/concepts/workloads/autoscaling/horizontal-pod-autoscale.md",
+      "sha256": "4e280b9515aee460cc9cb63a5f26c9ce85424e6eb8e19d274101a2ca54db2731",
+      "metadata_sha256": "48afcc31a121a259ffeb162ea220b6682ce6afe55b162f2ad4a8289b1f4fb402"
+    },
+    {
+      "path": "docs/concepts/workloads/controllers/cron-jobs.md",
+      "sha256": "6921ba0ee6613fefa4a9073c99a55b24a38c4203fabc3669f26ab098eda4e170",
+      "metadata_sha256": "06c8443bdf45b168e08581a802fee26c32f81bf5ce8362254fe56489f8eadb62"
+    },
+    {
+      "path": "docs/concepts/workloads/controllers/daemonset.md",
+      "sha256": "5a72f269475e1f0977b2bd24db1189d7b3ff1e6959b947b94ceeac817f071c88",
+      "metadata_sha256": "8b2421991bebacb5715d3cdd42a75e785f1a3262148ba43f4f7c7a5d5b851097"
+    },
+    {
+      "path": "docs/concepts/workloads/controllers/deployment.md",
+      "sha256": "9e77c68a351d8df8ae2b46dac9b6ef5b7bac5a0621b4619516a1ec5d269049d1",
+      "metadata_sha256": "4a657047e9e3100ea36da8ea3b8027b7243437a914112f41841feca0ea413b68"
+    },
+    {
+      "path": "docs/concepts/workloads/controllers/statefulset.md",
+      "sha256": "bd532a3256df432a6096250e3fbccc8f6cba6d7e8ce8e58fedbaf7755c37a696",
+      "metadata_sha256": "e30f45f0e6193fbc36405a6ff396eeffdceed49bfe866bc5f9de62798d4d44c6"
+    },
+    {
+      "path": "docs/concepts/workloads/controllers/ttlafterfinished.md",
+      "sha256": "2dc3eae436b06403e6bac7f046755526220ddd3673b95d50be71496be0f26f9c",
+      "metadata_sha256": "366a6033e12df72eabc0db6c0fe0daf212e3d22b9f6e6cec413205273eff75bf"
+    },
+    {
+      "path": "docs/concepts/workloads/pods/disruptions.md",
+      "sha256": "384868aca0d9f039e4370b9835062c4a7d8efb4ea50d8dcf9805fcf911badb9c",
+      "metadata_sha256": "dc412c890923e245dda113f7619b1c5b2466238074bdfe994c44b87972f1bde2"
+    },
+    {
+      "path": "docs/concepts/workloads/pods/init-containers.md",
+      "sha256": "c4ae502eda4dd1f7611385efd731f9941782dd4956c3244bb5c7fd3d55f31b9e",
+      "metadata_sha256": "5f46b0bc2f4863fb9a53001b6c0938b26e658c56945539f611630cf2dba96ebe"
+    },
+    {
+      "path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+      "sha256": "67325c30b63d9d262bb6bf72a608a0e480521cd1d4f30834d0d855026956290e",
+      "metadata_sha256": "51494c94abd9f60de343efcec5020f5841f47926fa0dcc32cd74ed1d523fa21e"
+    },
+    {
+      "path": "docs/concepts/workloads/pods/sidecar-containers.md",
+      "sha256": "be27e7790bea18484b2d8bf4eceac8e4161ce8cd42ce149a32447b1673ecced3",
+      "metadata_sha256": "a7c997247971ab710c79a77dbaa519258304f9ed7f7847c7e76545f93bd1c8c0"
+    }
+  ],
+  "relevance": {
+    "1": "Contains a manually selected supporting excerpt"
+  },
+  "unlisted_chunks": "unjudged",
+  "coverage_rule": "At least one matched chunk per required evidence ID",
+  "judgments": [
+    {
+      "question_id": "q01",
+      "relevant_chunk_ids": [
+        "1679640d97a2b26f6adc5e3e",
+        "5607220302af5f0ab6514712",
+        "7682b890065e6321d408b294",
+        "80475cccd08cb8540a7734c6",
+        "d5e6c55112c4e6be7739d83c"
+      ],
+      "required_evidence_ids": [
+        "q01-e01",
+        "q01-e02",
+        "q01-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q01-e01",
+          "matches": [
+            {
+              "chunk_id": "7682b890065e6321d408b294",
+              "section_id": "e39fd6a3322982d6e870b9ad",
+              "heading_path": [
+                "Service",
+                "Defining a Service"
+              ],
+              "span_start": 153,
+              "span_end": 184
+            },
+            {
+              "chunk_id": "80475cccd08cb8540a7734c6",
+              "section_id": "abfde9bc31f28656c1bd44f7",
+              "heading_path": [
+                "Service",
+                "Defining a Service",
+                "Services without selectors"
+              ],
+              "span_start": 124,
+              "span_end": 155
+            },
+            {
+              "chunk_id": "5607220302af5f0ab6514712",
+              "section_id": "62e3d59ac6c7d975dc2aeacc",
+              "heading_path": [
+                "Service",
+                "Defining a Service",
+                "Multi-port Services"
+              ],
+              "span_start": 170,
+              "span_end": 201
+            },
+            {
+              "chunk_id": "1679640d97a2b26f6adc5e3e",
+              "section_id": "e7c8431fe1cabd402d7f5be9",
+              "heading_path": [
+                "Service",
+                "Service type  {#publishing-services-service-types}",
+                "`type: LoadBalancer` {#loadbalancer}"
+              ],
+              "span_start": 153,
+              "span_end": 184
+            }
+          ]
+        },
+        {
+          "evidence_id": "q01-e02",
+          "matches": [
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "section_id": "e39fd6a3322982d6e870b9ad",
+              "heading_path": [
+                "Service",
+                "Defining a Service"
+              ],
+              "span_start": 231,
+              "span_end": 311
+            }
+          ]
+        },
+        {
+          "evidence_id": "q01-e03",
+          "matches": [
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "section_id": "e39fd6a3322982d6e870b9ad",
+              "heading_path": [
+                "Service",
+                "Defining a Service"
+              ],
+              "span_start": 992,
+              "span_end": 1086
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q02",
+      "relevant_chunk_ids": [
+        "73489c2c67c7662b9dec7021"
+      ],
+      "required_evidence_ids": [
+        "q02-e01",
+        "q02-e02",
+        "q02-e03",
+        "q02-e04"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q02-e01",
+          "matches": [
+            {
+              "chunk_id": "73489c2c67c7662b9dec7021",
+              "section_id": "9fa2e05c79d7ae18e27554c1",
+              "heading_path": [
+                "Pod Lifecycle",
+                "Container probes",
+                "Types of probe"
+              ],
+              "span_start": 157,
+              "span_end": 217
+            }
+          ]
+        },
+        {
+          "evidence_id": "q02-e02",
+          "matches": [
+            {
+              "chunk_id": "73489c2c67c7662b9dec7021",
+              "section_id": "9fa2e05c79d7ae18e27554c1",
+              "heading_path": [
+                "Pod Lifecycle",
+                "Container probes",
+                "Types of probe"
+              ],
+              "span_start": 535,
+              "span_end": 682
+            }
+          ]
+        },
+        {
+          "evidence_id": "q02-e03",
+          "matches": [
+            {
+              "chunk_id": "73489c2c67c7662b9dec7021",
+              "section_id": "9fa2e05c79d7ae18e27554c1",
+              "heading_path": [
+                "Pod Lifecycle",
+                "Container probes",
+                "Types of probe"
+              ],
+              "span_start": 921,
+              "span_end": 1001
+            }
+          ]
+        },
+        {
+          "evidence_id": "q02-e04",
+          "matches": [
+            {
+              "chunk_id": "73489c2c67c7662b9dec7021",
+              "section_id": "9fa2e05c79d7ae18e27554c1",
+              "heading_path": [
+                "Pod Lifecycle",
+                "Container probes",
+                "Types of probe"
+              ],
+              "span_start": 1002,
+              "span_end": 1061
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q03",
+      "relevant_chunk_ids": [
+        "f479cbc25030f0284702cde3"
+      ],
+      "required_evidence_ids": [
+        "q03-e01",
+        "q03-e02",
+        "q03-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q03-e01",
+          "matches": [
+            {
+              "chunk_id": "f479cbc25030f0284702cde3",
+              "section_id": "5be1d7416223b16eeb7117cc",
+              "heading_path": [
+                "ConfigMaps",
+                "Using ConfigMaps",
+                "Using ConfigMaps as files from a Pod"
+              ],
+              "span_start": 284,
+              "span_end": 390
+            }
+          ]
+        },
+        {
+          "evidence_id": "q03-e02",
+          "matches": [
+            {
+              "chunk_id": "f479cbc25030f0284702cde3",
+              "section_id": "5be1d7416223b16eeb7117cc",
+              "heading_path": [
+                "ConfigMaps",
+                "Using ConfigMaps",
+                "Using ConfigMaps as files from a Pod"
+              ],
+              "span_start": 923,
+              "span_end": 1105
+            }
+          ]
+        },
+        {
+          "evidence_id": "q03-e03",
+          "matches": [
+            {
+              "chunk_id": "f479cbc25030f0284702cde3",
+              "section_id": "5be1d7416223b16eeb7117cc",
+              "heading_path": [
+                "ConfigMaps",
+                "Using ConfigMaps",
+                "Using ConfigMaps as files from a Pod"
+              ],
+              "span_start": 1368,
+              "span_end": 1539
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q04",
+      "relevant_chunk_ids": [
+        "e48f8791ccc505e6184eccf1"
+      ],
+      "required_evidence_ids": [
+        "q04-e01",
+        "q04-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q04-e01",
+          "matches": [
+            {
+              "chunk_id": "e48f8791ccc505e6184eccf1",
+              "section_id": "b197d03dd05be40e3a8a4ced",
+              "heading_path": [
+                "Secrets",
+                "Working with Secrets",
+                "Creating a Secret"
+              ],
+              "span_start": 807,
+              "span_end": 1039
+            }
+          ]
+        },
+        {
+          "evidence_id": "q04-e02",
+          "matches": [
+            {
+              "chunk_id": "e48f8791ccc505e6184eccf1",
+              "section_id": "b197d03dd05be40e3a8a4ced",
+              "heading_path": [
+                "Secrets",
+                "Working with Secrets",
+                "Creating a Secret"
+              ],
+              "span_start": 1226,
+              "span_end": 1353
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q05",
+      "relevant_chunk_ids": [
+        "18c43264ecf2c340025efa15",
+        "9e8ad8350553d537dd246159"
+      ],
+      "required_evidence_ids": [
+        "q05-e01",
+        "q05-e02",
+        "q05-e03",
+        "q05-e04",
+        "q05-e05"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q05-e01",
+          "matches": [
+            {
+              "chunk_id": "9e8ad8350553d537dd246159",
+              "section_id": "b4e5e6d5bbdb4dcc30c5c306",
+              "heading_path": [
+                "Resource Management for Pods and Containers"
+              ],
+              "span_start": 179,
+              "span_end": 326
+            }
+          ]
+        },
+        {
+          "evidence_id": "q05-e02",
+          "matches": [
+            {
+              "chunk_id": "18c43264ecf2c340025efa15",
+              "section_id": "9a69848e5775f949b982e57e",
+              "heading_path": [
+                "Resource Management for Pods and Containers",
+                "Requests and limits"
+              ],
+              "span_start": 72,
+              "span_end": 184
+            }
+          ]
+        },
+        {
+          "evidence_id": "q05-e03",
+          "matches": [
+            {
+              "chunk_id": "18c43264ecf2c340025efa15",
+              "section_id": "9a69848e5775f949b982e57e",
+              "heading_path": [
+                "Resource Management for Pods and Containers",
+                "Requests and limits"
+              ],
+              "span_start": 688,
+              "span_end": 732
+            }
+          ]
+        },
+        {
+          "evidence_id": "q05-e04",
+          "matches": [
+            {
+              "chunk_id": "18c43264ecf2c340025efa15",
+              "section_id": "9a69848e5775f949b982e57e",
+              "heading_path": [
+                "Resource Management for Pods and Containers",
+                "Requests and limits"
+              ],
+              "span_start": 991,
+              "span_end": 1065
+            }
+          ]
+        },
+        {
+          "evidence_id": "q05-e05",
+          "matches": [
+            {
+              "chunk_id": "18c43264ecf2c340025efa15",
+              "section_id": "9a69848e5775f949b982e57e",
+              "heading_path": [
+                "Resource Management for Pods and Containers",
+                "Requests and limits"
+              ],
+              "span_start": 1156,
+              "span_end": 1221
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q06",
+      "relevant_chunk_ids": [
+        "6eebaa90c2946ed6a937705c",
+        "8839a84e05a075c37d1ae237"
+      ],
+      "required_evidence_ids": [
+        "q06-e01",
+        "q06-e02",
+        "q06-e03",
+        "q06-e04"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q06-e01",
+          "matches": [
+            {
+              "chunk_id": "6eebaa90c2946ed6a937705c",
+              "section_id": "a9d03afd27e60f52ceb49b3c",
+              "heading_path": [
+                "Deployments",
+                "Writing a Deployment Spec",
+                "Strategy"
+              ],
+              "span_start": 1485,
+              "span_end": 1552
+            }
+          ]
+        },
+        {
+          "evidence_id": "q06-e02",
+          "matches": [
+            {
+              "chunk_id": "6eebaa90c2946ed6a937705c",
+              "section_id": "a9d03afd27e60f52ceb49b3c",
+              "heading_path": [
+                "Deployments",
+                "Writing a Deployment Spec",
+                "Strategy"
+              ],
+              "span_start": 2355,
+              "span_end": 2424
+            }
+          ]
+        },
+        {
+          "evidence_id": "q06-e03",
+          "matches": [
+            {
+              "chunk_id": "6eebaa90c2946ed6a937705c",
+              "section_id": "a9d03afd27e60f52ceb49b3c",
+              "heading_path": [
+                "Deployments",
+                "Writing a Deployment Spec",
+                "Strategy"
+              ],
+              "span_start": 1553,
+              "span_end": 1649
+            }
+          ]
+        },
+        {
+          "evidence_id": "q06-e04",
+          "matches": [
+            {
+              "chunk_id": "8839a84e05a075c37d1ae237",
+              "section_id": "791e30b49383a4f1dac68f9f",
+              "heading_path": [
+                "Deployments",
+                "Updating a Deployment"
+              ],
+              "span_start": 280,
+              "span_end": 436
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q07",
+      "relevant_chunk_ids": [
+        "2cd357c0c11729d535aa50ae",
+        "fea922df6b608be36dcd0955"
+      ],
+      "required_evidence_ids": [
+        "q07-e01",
+        "q07-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q07-e01",
+          "matches": [
+            {
+              "chunk_id": "2cd357c0c11729d535aa50ae",
+              "section_id": "af3d9ac2dc73b786358bbe36",
+              "heading_path": [
+                "DNS for Services and Pods",
+                "Namespaces of Services"
+              ],
+              "span_start": 87,
+              "span_end": 236
+            }
+          ]
+        },
+        {
+          "evidence_id": "q07-e02",
+          "matches": [
+            {
+              "chunk_id": "fea922df6b608be36dcd0955",
+              "section_id": "7938cd93f09be1e653b12930",
+              "heading_path": [
+                "DNS for Services and Pods",
+                "Services",
+                "A/AAAA records"
+              ],
+              "span_start": 153,
+              "span_end": 250
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q08",
+      "relevant_chunk_ids": [
+        "7957cda3854a422125865867"
+      ],
+      "required_evidence_ids": [
+        "q08-e01",
+        "q08-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q08-e01",
+          "matches": [
+            {
+              "chunk_id": "7957cda3854a422125865867",
+              "section_id": "71979f235c51b9dbace4d744",
+              "heading_path": [
+                "Init Containers",
+                "Understanding init containers",
+                "Differences from regular containers"
+              ],
+              "span_start": 935,
+              "span_end": 1229
+            }
+          ]
+        },
+        {
+          "evidence_id": "q08-e02",
+          "matches": [
+            {
+              "chunk_id": "7957cda3854a422125865867",
+              "section_id": "71979f235c51b9dbace4d744",
+              "heading_path": [
+                "Init Containers",
+                "Understanding init containers",
+                "Differences from regular containers"
+              ],
+              "span_start": 458,
+              "span_end": 621
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q09",
+      "relevant_chunk_ids": [
+        "3af119a294fd2d743a444b66"
+      ],
+      "required_evidence_ids": [
+        "q09-e01",
+        "q09-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q09-e01",
+          "matches": [
+            {
+              "chunk_id": "3af119a294fd2d743a444b66",
+              "section_id": "b7f2ddc408687e50b4b223c3",
+              "heading_path": [
+                "Network Policies",
+                "The two sorts of pod isolation"
+              ],
+              "span_start": 1639,
+              "span_end": 1691
+            }
+          ]
+        },
+        {
+          "evidence_id": "q09-e02",
+          "matches": [
+            {
+              "chunk_id": "3af119a294fd2d743a444b66",
+              "section_id": "b7f2ddc408687e50b4b223c3",
+              "heading_path": [
+                "Network Policies",
+                "The two sorts of pod isolation"
+              ],
+              "span_start": 1932,
+              "span_end": 2119
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q10",
+      "relevant_chunk_ids": [
+        "0d82be5f2122d21b67fd7e56"
+      ],
+      "required_evidence_ids": [
+        "q10-e01",
+        "q10-e02",
+        "q10-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q10-e01",
+          "matches": [
+            {
+              "chunk_id": "0d82be5f2122d21b67fd7e56",
+              "section_id": "2e5bf455f109a4aff15e83b2",
+              "heading_path": [
+                "Persistent Volumes",
+                "Persistent Volumes",
+                "Access Modes"
+              ],
+              "span_start": 569,
+              "span_end": 714
+            }
+          ]
+        },
+        {
+          "evidence_id": "q10-e02",
+          "matches": [
+            {
+              "chunk_id": "0d82be5f2122d21b67fd7e56",
+              "section_id": "2e5bf455f109a4aff15e83b2",
+              "heading_path": [
+                "Persistent Volumes",
+                "Persistent Volumes",
+                "Access Modes"
+              ],
+              "span_start": 965,
+              "span_end": 1153
+            }
+          ]
+        },
+        {
+          "evidence_id": "q10-e03",
+          "matches": [
+            {
+              "chunk_id": "0d82be5f2122d21b67fd7e56",
+              "section_id": "2e5bf455f109a4aff15e83b2",
+              "heading_path": [
+                "Persistent Volumes",
+                "Persistent Volumes",
+                "Access Modes"
+              ],
+              "span_start": 1166,
+              "span_end": 1234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q11",
+      "relevant_chunk_ids": [
+        "57686980c3ac2ad7d32d9b8d",
+        "f479cbc25030f0284702cde3"
+      ],
+      "required_evidence_ids": [
+        "q11-e01",
+        "q11-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q11-e01",
+          "matches": [
+            {
+              "chunk_id": "f479cbc25030f0284702cde3",
+              "section_id": "5be1d7416223b16eeb7117cc",
+              "heading_path": [
+                "ConfigMaps",
+                "Using ConfigMaps",
+                "Using ConfigMaps as files from a Pod"
+              ],
+              "span_start": 1254,
+              "span_end": 1355
+            }
+          ]
+        },
+        {
+          "evidence_id": "q11-e02",
+          "matches": [
+            {
+              "chunk_id": "57686980c3ac2ad7d32d9b8d",
+              "section_id": "791e30b49383a4f1dac68f9f",
+              "heading_path": [
+                "Deployments",
+                "Updating a Deployment"
+              ],
+              "span_start": 12,
+              "span_end": 280
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q12",
+      "relevant_chunk_ids": [
+        "46af6e2203ba6f04a8c743fa",
+        "73489c2c67c7662b9dec7021"
+      ],
+      "required_evidence_ids": [
+        "q12-e01",
+        "q12-e02",
+        "q12-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q12-e01",
+          "matches": [
+            {
+              "chunk_id": "73489c2c67c7662b9dec7021",
+              "section_id": "9fa2e05c79d7ae18e27554c1",
+              "heading_path": [
+                "Pod Lifecycle",
+                "Container probes",
+                "Types of probe"
+              ],
+              "span_start": 451,
+              "span_end": 534
+            }
+          ]
+        },
+        {
+          "evidence_id": "q12-e02",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 343,
+              "span_end": 415
+            }
+          ]
+        },
+        {
+          "evidence_id": "q12-e03",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 1036,
+              "span_end": 1234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q13",
+      "relevant_chunk_ids": [
+        "40d276629eb023d84b17f250",
+        "cb087da529e2a669f6464b89"
+      ],
+      "required_evidence_ids": [
+        "q13-e01",
+        "q13-e02",
+        "q13-e03",
+        "q13-e04"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q13-e01",
+          "matches": [
+            {
+              "chunk_id": "cb087da529e2a669f6464b89",
+              "section_id": "c0ccd33f1e66e5bded4874cc",
+              "heading_path": [
+                "StatefulSets",
+                "Pod Identity",
+                "Stable Network ID"
+              ],
+              "span_start": 109,
+              "span_end": 186
+            }
+          ]
+        },
+        {
+          "evidence_id": "q13-e02",
+          "matches": [
+            {
+              "chunk_id": "cb087da529e2a669f6464b89",
+              "section_id": "c0ccd33f1e66e5bded4874cc",
+              "heading_path": [
+                "StatefulSets",
+                "Pod Identity",
+                "Stable Network ID"
+              ],
+              "span_start": 574,
+              "span_end": 776
+            }
+          ]
+        },
+        {
+          "evidence_id": "q13-e03",
+          "matches": [
+            {
+              "chunk_id": "40d276629eb023d84b17f250",
+              "section_id": "408106345fc72b3fc327541a",
+              "heading_path": [
+                "DNS for Services and Pods",
+                "Services",
+                "SRV records"
+              ],
+              "span_start": 141,
+              "span_end": 216
+            }
+          ]
+        },
+        {
+          "evidence_id": "q13-e04",
+          "matches": [
+            {
+              "chunk_id": "40d276629eb023d84b17f250",
+              "section_id": "408106345fc72b3fc327541a",
+              "heading_path": [
+                "DNS for Services and Pods",
+                "Services",
+                "SRV records"
+              ],
+              "span_start": 350,
+              "span_end": 516
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q14",
+      "relevant_chunk_ids": [
+        "05c929b1b9ea85ee852027cd",
+        "bd7bb874b60d7bcc9b765d56"
+      ],
+      "required_evidence_ids": [
+        "q14-e01",
+        "q14-e02",
+        "q14-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q14-e01",
+          "matches": [
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "section_id": "a6cbbd181511533200a31c4d",
+              "heading_path": [
+                "StatefulSets",
+                "PersistentVolumeClaim retention"
+              ],
+              "span_start": 1764,
+              "span_end": 1860
+            }
+          ]
+        },
+        {
+          "evidence_id": "q14-e02",
+          "matches": [
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "section_id": "a6cbbd181511533200a31c4d",
+              "heading_path": [
+                "StatefulSets",
+                "PersistentVolumeClaim retention"
+              ],
+              "span_start": 1199,
+              "span_end": 1299
+            }
+          ]
+        },
+        {
+          "evidence_id": "q14-e03",
+          "matches": [
+            {
+              "chunk_id": "bd7bb874b60d7bcc9b765d56",
+              "section_id": "6558f2a7fbac72d48b2a4eb1",
+              "heading_path": [
+                "Persistent Volumes",
+                "Lifecycle of a volume and claim",
+                "Reclaiming"
+              ],
+              "span_start": 1152,
+              "span_end": 1290
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q15",
+      "relevant_chunk_ids": [
+        "7db312c1365eb2a2fda0a20f",
+        "a1affbdd0f1fb02ac48e34c5"
+      ],
+      "required_evidence_ids": [
+        "q15-e01",
+        "q15-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q15-e01",
+          "matches": [
+            {
+              "chunk_id": "7db312c1365eb2a2fda0a20f",
+              "section_id": "b81ebeef7777ae40c274b652",
+              "heading_path": [
+                "Persistent Volumes",
+                "Persistent Volumes",
+                "Node Affinity"
+              ],
+              "span_start": 195,
+              "span_end": 394
+            }
+          ]
+        },
+        {
+          "evidence_id": "q15-e02",
+          "matches": [
+            {
+              "chunk_id": "a1affbdd0f1fb02ac48e34c5",
+              "section_id": "3bedf09b486c05f419826b21",
+              "heading_path": [
+                "Storage Classes",
+                "Volume binding mode"
+              ],
+              "span_start": 718,
+              "span_end": 967
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q16",
+      "relevant_chunk_ids": [
+        "16523ddcaf4ea248abfb8c66",
+        "4d18efc6515480a4a535d132",
+        "b87b17e50d47c9acff7bc7b2"
+      ],
+      "required_evidence_ids": [
+        "q16-e01",
+        "q16-e02",
+        "q16-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q16-e01",
+          "matches": [
+            {
+              "chunk_id": "4d18efc6515480a4a535d132",
+              "section_id": "0d2b95a41cd3dd8fe4d8bb54",
+              "heading_path": [
+                "Limit Ranges"
+              ],
+              "span_start": 1295,
+              "span_end": 1415
+            }
+          ]
+        },
+        {
+          "evidence_id": "q16-e02",
+          "matches": [
+            {
+              "chunk_id": "16523ddcaf4ea248abfb8c66",
+              "section_id": "09ee2ea572ebda3cfd67e046",
+              "heading_path": [
+                "Horizontal Pod Autoscaling",
+                "How does a HorizontalPodAutoscaler work?"
+              ],
+              "span_start": 1646,
+              "span_end": 1938
+            }
+          ]
+        },
+        {
+          "evidence_id": "q16-e03",
+          "matches": [
+            {
+              "chunk_id": "b87b17e50d47c9acff7bc7b2",
+              "section_id": "dcd1a987bd96600368b1df8b",
+              "heading_path": [
+                "Horizontal Pod Autoscaling",
+                "How does a HorizontalPodAutoscaler work?",
+                "Algorithm details"
+              ],
+              "span_start": 26,
+              "span_end": 141
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q17",
+      "relevant_chunk_ids": [
+        "5d68c787380f3c90c614262e",
+        "63335a65a2aab04f4a8511e0"
+      ],
+      "required_evidence_ids": [
+        "q17-e01",
+        "q17-e02"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q17-e01",
+          "matches": [
+            {
+              "chunk_id": "5d68c787380f3c90c614262e",
+              "section_id": "673c2d276d106014062bd9db",
+              "heading_path": [
+                "Nodes",
+                "Management",
+                "Manual Node administration"
+              ],
+              "span_start": 959,
+              "span_end": 1097
+            }
+          ]
+        },
+        {
+          "evidence_id": "q17-e02",
+          "matches": [
+            {
+              "chunk_id": "63335a65a2aab04f4a8511e0",
+              "section_id": "f33bf4e4c35fbfbe69414275",
+              "heading_path": [
+                "DaemonSet",
+                "How Daemon Pods are scheduled",
+                "Taints and tolerations"
+              ],
+              "span_start": 2263,
+              "span_end": 2455
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q18",
+      "relevant_chunk_ids": [
+        "6eebaa90c2946ed6a937705c",
+        "9cb445648b3ce57958fb1729"
+      ],
+      "required_evidence_ids": [
+        "q18-e01",
+        "q18-e02",
+        "q18-e03"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q18-e01",
+          "matches": [
+            {
+              "chunk_id": "9cb445648b3ce57958fb1729",
+              "section_id": "e2e4fc41011fa4a30eae504d",
+              "heading_path": [
+                "Disruptions",
+                "Pod disruption budgets"
+              ],
+              "span_start": 653,
+              "span_end": 1357
+            }
+          ]
+        },
+        {
+          "evidence_id": "q18-e02",
+          "matches": [
+            {
+              "chunk_id": "9cb445648b3ce57958fb1729",
+              "section_id": "e2e4fc41011fa4a30eae504d",
+              "heading_path": [
+                "Disruptions",
+                "Pod disruption budgets"
+              ],
+              "span_start": 2479,
+              "span_end": 2587
+            }
+          ]
+        },
+        {
+          "evidence_id": "q18-e03",
+          "matches": [
+            {
+              "chunk_id": "6eebaa90c2946ed6a937705c",
+              "section_id": "a9d03afd27e60f52ceb49b3c",
+              "heading_path": [
+                "Deployments",
+                "Writing a Deployment Spec",
+                "Strategy"
+              ],
+              "span_start": 1220,
+              "span_end": 1379
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q19",
+      "relevant_chunk_ids": [
+        "0364da6c95136c1bbec9356b",
+        "7f1376f36a6e6463d62404a8",
+        "cce2a684177c6f86d1b43e87"
+      ],
+      "required_evidence_ids": [
+        "q19-e01",
+        "q19-e02",
+        "q19-e03",
+        "q19-e04"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q19-e01",
+          "matches": [
+            {
+              "chunk_id": "0364da6c95136c1bbec9356b",
+              "section_id": "6f8c49cf316bf78bf80abc5a",
+              "heading_path": [
+                "CronJob",
+                "Writing a CronJob spec",
+                "Job template"
+              ],
+              "span_start": 1,
+              "span_end": 102
+            }
+          ]
+        },
+        {
+          "evidence_id": "q19-e02",
+          "matches": [
+            {
+              "chunk_id": "cce2a684177c6f86d1b43e87",
+              "section_id": "5f53668e5622087f107d48bd",
+              "heading_path": [
+                "Automatic Cleanup for Finished Jobs",
+                "Cleanup for finished Jobs"
+              ],
+              "span_start": 162,
+              "span_end": 226
+            }
+          ]
+        },
+        {
+          "evidence_id": "q19-e03",
+          "matches": [
+            {
+              "chunk_id": "cce2a684177c6f86d1b43e87",
+              "section_id": "5f53668e5622087f107d48bd",
+              "heading_path": [
+                "Automatic Cleanup for Finished Jobs",
+                "Cleanup for finished Jobs"
+              ],
+              "span_start": 485,
+              "span_end": 657
+            }
+          ]
+        },
+        {
+          "evidence_id": "q19-e04",
+          "matches": [
+            {
+              "chunk_id": "7f1376f36a6e6463d62404a8",
+              "section_id": "e39cca84d598cbb717515596",
+              "heading_path": [
+                "CronJob",
+                "Writing a CronJob spec",
+                "Jobs history limits"
+              ],
+              "span_start": 1,
+              "span_end": 140
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": "q20",
+      "relevant_chunk_ids": [
+        "46af6e2203ba6f04a8c743fa",
+        "eedf0d725047e90dcee66763"
+      ],
+      "required_evidence_ids": [
+        "q20-e01",
+        "q20-e02",
+        "q20-e03",
+        "q20-e04",
+        "q20-e05"
+      ],
+      "evidence_groups": [
+        {
+          "evidence_id": "q20-e01",
+          "matches": [
+            {
+              "chunk_id": "eedf0d725047e90dcee66763",
+              "section_id": "c8c0fd4b4bc4ae93e5d4a737",
+              "heading_path": [
+                "Sidecar Containers",
+                "Sidecar containers and Pod lifecycle"
+              ],
+              "span_start": 1346,
+              "span_end": 1564
+            }
+          ]
+        },
+        {
+          "evidence_id": "q20-e02",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 569,
+              "span_end": 720
+            }
+          ]
+        },
+        {
+          "evidence_id": "q20-e03",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 797,
+              "span_end": 920
+            }
+          ]
+        },
+        {
+          "evidence_id": "q20-e04",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 1036,
+              "span_end": 1234
+            }
+          ]
+        },
+        {
+          "evidence_id": "q20-e05",
+          "matches": [
+            {
+              "chunk_id": "46af6e2203ba6f04a8c743fa",
+              "section_id": "17737f1768d30738de947dc6",
+              "heading_path": [
+                "EndpointSlices",
+                "EndpointSlice API {#endpointslice-resource}",
+                "Conditions"
+              ],
+              "span_start": 343,
+              "span_end": 415
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "created_at": "2026-10-23T00:05:35.741923+00:00",
+  "cases": [
+    {
+      "type": "single_hop",
+      "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+      "top_k": 3,
+      "status_code": 200,
+      "seconds": 46.38925316702807,
+      "response": {
+        "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+        "answer": "Клиент обращается на порт 80, а трафик попадает на порт 9376 в Pod.\n\nИсточники: [1] [2]",
+        "citations": [
+          {
+            "id": 1,
+            "chunk_id": "689192d050492eb5b5b247ea",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+            "page": null,
+            "snippet": "Port definitions in Pods have names, and you can reference these names in the\n`targetPort` attribute of a Service. For example, we can bind the `targetPort`\nof the Service to the Pod port in the following way:",
+            "score": 0.71949875
+          },
+          {
+            "id": 2,
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "page": null,
+            "snippet": "Applying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.\n\nKubernetes assigns this Service an IP address (the *cluster IP*),\nthat is used by the virtual IP address mechanism. For more details on that mechanism,\nread [Virtual IPs and Service Proxies](https://v1-35.docs.kubernetes.io/docs/reference/networking/virtual-ips/).\n\nThe controller for that Service continuously scans for Pods that\nmatch its selector, and then makes any necessary updates to the set of\nEndpointSlices for the Service.\n\nThe name of a Service object must be a valid\n[RFC 1035 label name](https://v1-35.docs.kubernetes.io/docs/concepts/overview/working-with-objects/names#rfc-1035-label-names).\n\n**Note:**\n\nA Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+            "score": 0.70473623
+          }
+        ],
+        "insufficient_context": false,
+        "metadata": {
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "retrieved_chunks": 3,
+          "context_chunks": 3,
+          "context_chunk_ids": [
+            "689192d050492eb5b5b247ea",
+            "d5e6c55112c4e6be7739d83c",
+            "8a2dacb0aed58fd2edd559cf"
+          ],
+          "retrieval_seconds": 8.642746082972735,
+          "total_seconds": 46.383051500015426,
+          "usage": {
+            "model": "glm4:9b",
+            "prompt_eval_count": 1194,
+            "eval_count": 151,
+            "total_duration": 37736157250,
+            "attempts": 1
+          }
+        }
+      },
+      "passed": true
+    },
+    {
+      "type": "multi_hop",
+      "question": "Есть StatefulSet db с serviceName=db-headless в namespace prod, обычной нумерацией с нуля и доменом cluster.local. Headless Service имеет именованный TCP-порт sql:5432. Какое полное DNS-имя будет у первого Pod и какое имя SRV-запроса использовать для sql?",
+      "top_k": 5,
+      "status_code": 200,
+      "seconds": 71.11412366700824,
+      "response": {
+        "question": "Есть StatefulSet db с serviceName=db-headless в namespace prod, обычной нумерацией с нуля и доменом cluster.local. Headless Service имеет именованный TCP-порт sql:5432. Какое полное DNS-имя будет у первого Pod и какое имя SRV-запроса использовать для sql?",
+        "answer": "Полное DNS-имя первого Pod будет db-0.prod.svc.cluster.local, и для sql использовать SRV-запрос _sql._tcp.db.prod.svc.cluster.local.\n\nИсточники: [1] [2]",
+        "citations": [
+          {
+            "id": 1,
+            "chunk_id": "cb087da529e2a669f6464b89",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > Pod Identity > Stable Network ID",
+            "page": null,
+            "snippet": "Each Pod in a StatefulSet derives its hostname from the name of the StatefulSet\nand the ordinal of the Pod. The pattern for the constructed hostname\nis `$(statefulset name)-$(ordinal)`. The example above will create three Pods\nnamed `web-0,web-1,web-2`.\nA StatefulSet can use a [Headless Service](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#headless-services)\nto control the domain of its Pods. The domain managed by this Service takes the form:\n`$(service name).$(namespace).svc.cluster.local`, where \"cluster.local\" is the\ncluster domain.\nAs each Pod is created, it gets a matching DNS subdomain, taking the form:\n`$(podname).$(governing service domain)`, where the governing service is defined\nby the `serviceName` field on the StatefulSet.\n\nDepending on how DNS is configured in your cluster, you may not be able to look up the DNS\nname for a newly-run Pod immediately. This behavior can occur when other clients in the\ncluster have already sent queries for the hostname of the Pod before it was created.\nNegative caching (normal in DNS) means that the results of previous failed lookups are\nremembered and reused, even after the Pod is running, for at least a few seconds.\n\nIf you need to discover Pods promptly after they are created, you have a few options:\n\n* Query the Kubernetes API directly (for example, using a watch) rather than relying on DNS lookups.\n* Decrease the time of caching in your Kubernetes DNS provider (typically this means editing the\n  config map for CoreDNS, which currently caches for 30 seconds).\n\nAs mentioned in the [limitations](https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations) section, you are responsible for\ncreating the [Headless Service](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#headless-services)\nresponsible for the network identity of the pods.\n\nHere are some examples of choices for Cluster Domain, Service name,\nStatefulSet name, and how that affects the DNS names for the StatefulSet's Pods.\n\n| Cluster Domain | Service (ns/name) | StatefulSet (ns/name) | StatefulSet Domain | Pod DNS | Pod Hostname |\n| --- | --- | --- | --- | --- | --- |\n| cluster.local | default/nginx | default/web | nginx.default.svc.cluster.local | web-{0..N-1}.nginx.default.svc.cluster.local | web-{0..N-1} |\n| cluster.local | foo/nginx | foo/web | nginx.foo.svc.cluster.local | web-{0..N-1}.nginx.foo.svc.cluster.local | web-{0..N-1} |\n| kube.local | foo/nginx | foo/web | nginx.foo.svc.kube.local | web-{0..N-1}.nginx.foo.svc.kube.local | web-{0..N-1} |\n\n**Note:**\n\nCluster Domain will be set to `cluster.local` unless\n[otherwise configured](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/).",
+            "score": 0.74951375
+          },
+          {
+            "id": 2,
+            "chunk_id": "40d276629eb023d84b17f250",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/",
+            "source_path": "content/en/docs/concepts/services-networking/dns-pod-service.md",
+            "section": "DNS for Services and Pods > Services > SRV records",
+            "page": null,
+            "snippet": "SRV Records are created for named ports that are part of normal or headless\nservices.\n\n- For each named port, the SRV record has the form\n  `_port-name._port-protocol.my-svc.my-namespace.svc.cluster-domain.example`.\n- For a regular Service, this resolves to the port number and the domain name:\n  `my-svc.my-namespace.svc.cluster-domain.example`.\n- For a headless Service, this resolves to multiple answers, one for each Pod\n  that is backing the Service, and contains the port number and the domain name of the Pod\n  of the form `hostname.my-svc.my-namespace.svc.cluster-domain.example`.",
+            "score": 0.6765158
+          }
+        ],
+        "insufficient_context": false,
+        "metadata": {
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "retrieved_chunks": 5,
+          "context_chunks": 5,
+          "context_chunk_ids": [
+            "cb087da529e2a669f6464b89",
+            "40d276629eb023d84b17f250",
+            "abf263233c5b94fbda16062d",
+            "40903cb292043d794a1a8016",
+            "05631d15c3efc875bd1bbb7e"
+          ],
+          "retrieval_seconds": 0.23100324999541044,
+          "total_seconds": 71.1075519999722,
+          "usage": {
+            "model": "glm4:9b",
+            "prompt_eval_count": 2242,
+            "eval_count": 336,
+            "total_duration": 70870952167,
+            "attempts": 1
+          }
+        }
+      },
+      "passed": false
+    },
+    {
+      "type": "out_of_scope",
+      "question": "Как приготовить шарлотку с яблоками?",
+      "top_k": 3,
+      "status_code": 200,
+      "seconds": 0.6551872090203688,
+      "response": {
+        "question": "Как приготовить шарлотку с яблоками?",
+        "answer": "В найденной документации недостаточно информации для подтверждённого ответа. Уточните вопрос или расширьте корпус.",
+        "citations": [],
+        "insufficient_context": true,
+        "metadata": {
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "retrieved_chunks": 0,
+          "context_chunks": 0,
+          "context_chunk_ids": [],
+          "retrieval_seconds": 0.6503425419796258,
+          "total_seconds": 0.6504415000090376,
+          "usage": {}
+        }
+      },
+      "passed": true
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "collection": "eval_config_4f81592daeca8af76b57",
+    "llm_model": "glm4:9b"
+  }
+}

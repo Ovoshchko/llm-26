@@ -1,0 +1,806 @@
+{
+  "created_at": "2026-10-29T20:48:39.401867+00:00",
+  "cases": [
+    {
+      "kind": "statefulset_pvc",
+      "question": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PersistentVolume стоит reclaimPolicy: Delete. CSI-драйвер поддерживает удаление. Удалятся ли данные при удалении StatefulSet? А если после этого вручную удалить оставшийся PVC?",
+      "top_k": 2,
+      "status": 200,
+      "seconds": 104.29020874999696,
+      "response": {
+        "question": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PersistentVolume стоит reclaimPolicy: Delete. CSI-драйвер поддерживает удаление. Удалятся ли данные при удалении StatefulSet? А если после этого вручную удалить оставшийся PVC?",
+        "answer": "Найдены только частичные подтверждения:\n\n[1] The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:\n\n[2] `Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n[3] The default for policies is `Retain`, matching the StatefulSet behavior before this new feature.\n\n[4] For each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\nНе подтверждено источниками: А если после этого вручную удалить оставшийся PVC?",
+        "citations": [
+          {
+            "id": 1,
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "page": null,
+            "snippet": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:",
+            "score": 0.86775553
+          },
+          {
+            "id": 2,
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "page": null,
+            "snippet": "`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.",
+            "score": 0.86775553
+          },
+          {
+            "id": 3,
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "page": null,
+            "snippet": "The default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+            "score": 0.86775553
+          },
+          {
+            "id": 4,
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "page": null,
+            "snippet": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.",
+            "score": 0.86775553
+          }
+        ],
+        "insufficient_context": true,
+        "metadata": {
+          "architecture": "planned-evidence-multihop-v1",
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42,
+            "verify_answers": false
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "requirements": [
+            {
+              "id": 1,
+              "question": "Удалятся ли данные при удалении StatefulSet?",
+              "query": "What is the effect of the reclaimPolicy: Delete on a PersistentVolume when a StatefulSet is deleted?"
+            },
+            {
+              "id": 2,
+              "question": "А если после этого вручную удалить оставшийся PVC?",
+              "query": "What is the effect of manually deleting a PersistentVolumeClaim (PVC) that was not deleted by the StatefulSet deletion?"
+            }
+          ],
+          "missing_requirement_ids": [
+            2
+          ],
+          "coverage_method": "model-selected exact quotes; semantic entailment is not verified",
+          "evidence": [
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "score": 0.86775553,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+              "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+              "section": "StatefulSets > PersistentVolumeClaim retention",
+              "source_id": 1,
+              "requirement_id": 1,
+              "quote": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:",
+              "span_start": 21,
+              "span_end": 456
+            },
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "score": 0.86775553,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+              "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+              "section": "StatefulSets > PersistentVolumeClaim retention",
+              "source_id": 1,
+              "requirement_id": 1,
+              "quote": "`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.",
+              "span_start": 823,
+              "span_end": 1197
+            },
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "score": 0.86775553,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+              "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+              "section": "StatefulSets > PersistentVolumeClaim retention",
+              "source_id": 1,
+              "requirement_id": 1,
+              "quote": "The default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+              "span_start": 1764,
+              "span_end": 1860
+            },
+            {
+              "chunk_id": "05c929b1b9ea85ee852027cd",
+              "score": 0.86775553,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+              "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+              "section": "StatefulSets > PersistentVolumeClaim retention",
+              "source_id": 2,
+              "requirement_id": 1,
+              "quote": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.",
+              "span_start": 728,
+              "span_end": 821
+            }
+          ],
+          "max_hops": 3,
+          "hops": [
+            {
+              "query": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PersistentVolume стоит reclaimPolicy: Delete. CSI-драйвер поддерживает удаление. Удалятся ли данные при удалении StatefulSet? А если после этого вручную удалить оставшийся PVC?",
+              "target_requirement_id": 1,
+              "chunk_ids": [
+                "05c929b1b9ea85ee852027cd",
+                "3e44a57e4fc71d46aaf10ba2"
+              ],
+              "new_chunks": 2,
+              "usage": {
+                "attempts": 1,
+                "calls": [
+                  {
+                    "model": "glm4:9b",
+                    "prompt_eval_count": 1017,
+                    "eval_count": 210,
+                    "total_duration": 26624482958
+                  }
+                ]
+              },
+              "evidence": [
+                {
+                  "chunk_id": "05c929b1b9ea85ee852027cd",
+                  "score": 0.86775553,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                  "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                  "section": "StatefulSets > PersistentVolumeClaim retention",
+                  "source_id": 1,
+                  "requirement_id": 1,
+                  "quote": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:",
+                  "span_start": 21,
+                  "span_end": 456
+                },
+                {
+                  "chunk_id": "05c929b1b9ea85ee852027cd",
+                  "score": 0.86775553,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                  "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                  "section": "StatefulSets > PersistentVolumeClaim retention",
+                  "source_id": 1,
+                  "requirement_id": 1,
+                  "quote": "`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.",
+                  "span_start": 823,
+                  "span_end": 1197
+                },
+                {
+                  "chunk_id": "05c929b1b9ea85ee852027cd",
+                  "score": 0.86775553,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                  "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                  "section": "StatefulSets > PersistentVolumeClaim retention",
+                  "source_id": 1,
+                  "requirement_id": 1,
+                  "quote": "The default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+                  "span_start": 1764,
+                  "span_end": 1860
+                }
+              ],
+              "rejected_evidence": [],
+              "context_chunk_ids": [
+                "05c929b1b9ea85ee852027cd",
+                "3e44a57e4fc71d46aaf10ba2"
+              ],
+              "next_query": "What is the effect of manually deleting a PersistentVolumeClaim (PVC) that was not deleted by the StatefulSet deletion?",
+              "missing_requirement_ids": [
+                2
+              ],
+              "next_query_origin": "plan"
+            },
+            {
+              "query": "What is the effect of manually deleting a PersistentVolumeClaim (PVC) that was not deleted by the StatefulSet deletion?",
+              "target_requirement_id": 2,
+              "chunk_ids": [
+                "05c929b1b9ea85ee852027cd",
+                "8c78da8f62a75cdb4dbb85d2"
+              ],
+              "new_chunks": 1,
+              "usage": {
+                "attempts": 1,
+                "calls": [
+                  {
+                    "model": "glm4:9b",
+                    "prompt_eval_count": 1755,
+                    "eval_count": 291,
+                    "total_duration": 57486663833
+                  }
+                ]
+              },
+              "evidence": [
+                {
+                  "chunk_id": "05c929b1b9ea85ee852027cd",
+                  "score": 0.86775553,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                  "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                  "section": "StatefulSets > PersistentVolumeClaim retention",
+                  "source_id": 2,
+                  "requirement_id": 1,
+                  "quote": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.",
+                  "span_start": 728,
+                  "span_end": 821
+                }
+              ],
+              "rejected_evidence": [
+                {
+                  "requirement_id": 1,
+                  "source_id": 1,
+                  "quote": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet.",
+                  "reason": "Quote is absent from source"
+                },
+                {
+                  "requirement_id": 1,
+                  "source_id": 1,
+                  "quote": "The `whenDeleted` policy must delete PVCs only when a Pod is scaled down, and not when a\nPod is deleted for another reason.",
+                  "reason": "Quote is absent from source"
+                }
+              ],
+              "context_chunk_ids": [
+                "8c78da8f62a75cdb4dbb85d2",
+                "05c929b1b9ea85ee852027cd",
+                "3e44a57e4fc71d46aaf10ba2"
+              ],
+              "next_query": null,
+              "missing_requirement_ids": [
+                2
+              ]
+            }
+          ],
+          "stop_reason": "no_progress",
+          "retrieved_chunks": 3,
+          "context_chunks": 4,
+          "context_chunk_ids": [
+            "05c929b1b9ea85ee852027cd",
+            "05c929b1b9ea85ee852027cd",
+            "05c929b1b9ea85ee852027cd",
+            "05c929b1b9ea85ee852027cd"
+          ],
+          "retrieval_seconds": 4.785156375030056,
+          "total_seconds": 104.28369683300843,
+          "usage": {
+            "planning": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 298,
+                  "eval_count": 117,
+                  "total_duration": 14659708584
+                }
+              ]
+            },
+            "answer": {
+              "mode": "extractive_partial"
+            }
+          }
+        }
+      },
+      "provenance_passed": true,
+      "answer_passed": null,
+      "transport": "HTTP"
+    },
+    {
+      "kind": "service_before_fix",
+      "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+      "top_k": 3,
+      "status": 200,
+      "seconds": 111.89041058300063,
+      "response": {
+        "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+        "answer": "Найдены только частичные подтверждения:\n\n[1] \nPort definitions in Pods have names, and you can reference these names in the\n`targetPort` attribute of a Service. For example, we can bind the `targetPort`\nof the Service to the Pod port in the following way:\n\n[2] A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.\n\n[3] A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.\n\nНе подтверждено источниками: How does a client communicate with a Service in Kubernetes when the Service is defined with a specific 'port' and 'targetPort'?; What happens to the traffic when it reaches a Pod in Kubernetes, considering the 'port' and 'targetPort' settings of the Service?",
+        "citations": [
+          {
+            "id": 1,
+            "chunk_id": "689192d050492eb5b5b247ea",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+            "page": null,
+            "snippet": "\nPort definitions in Pods have names, and you can reference these names in the\n`targetPort` attribute of a Service. For example, we can bind the `targetPort`\nof the Service to the Pod port in the following way:",
+            "score": 0.71949875
+          },
+          {
+            "id": 2,
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "page": null,
+            "snippet": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+            "score": 0.70473623
+          },
+          {
+            "id": 3,
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "page": null,
+            "snippet": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+            "score": 0.70473623
+          }
+        ],
+        "insufficient_context": true,
+        "metadata": {
+          "architecture": "planned-evidence-multihop-v1",
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42,
+            "verify_answers": false
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "requirements": [
+            {
+              "id": 1,
+              "question": "What is the meaning of the 'port' field in a Service definition in Kubernetes?",
+              "query": "What is the meaning of the 'port' field in a Service definition in Kubernetes?"
+            },
+            {
+              "id": 2,
+              "question": "What is the meaning of the 'targetPort' field in a Service definition in Kubernetes?",
+              "query": "What is the meaning of the 'targetPort' field in a Service definition in Kubernetes?"
+            },
+            {
+              "id": 3,
+              "question": "How does a client communicate with a Service in Kubernetes when the Service is defined with a specific 'port' and 'targetPort'?",
+              "query": "How does a client communicate with a Service in Kubernetes when the Service is defined with a specific 'port' and 'targetPort'?"
+            },
+            {
+              "id": 4,
+              "question": "What happens to the traffic when it reaches a Pod in Kubernetes, considering the 'port' and 'targetPort' settings of the Service?",
+              "query": "What happens to the traffic when it reaches a Pod in Kubernetes, considering the 'port' and 'targetPort' settings of the Service?"
+            }
+          ],
+          "missing_requirement_ids": [
+            3,
+            4
+          ],
+          "coverage_method": "model-selected exact quotes; semantic entailment is not verified",
+          "evidence": [
+            {
+              "chunk_id": "689192d050492eb5b5b247ea",
+              "score": 0.71949875,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+              "source_id": 1,
+              "requirement_id": 1,
+              "quote": "\nPort definitions in Pods have names, and you can reference these names in the\n`targetPort` attribute of a Service. For example, we can bind the `targetPort`\nof the Service to the Pod port in the following way:",
+              "span_start": 0,
+              "span_end": 210
+            },
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "score": 0.70473623,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service",
+              "source_id": 2,
+              "requirement_id": 1,
+              "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+              "span_start": 933,
+              "span_end": 1086
+            },
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "score": 0.70473623,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service",
+              "source_id": 2,
+              "requirement_id": 2,
+              "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+              "span_start": 933,
+              "span_end": 1086
+            },
+            {
+              "chunk_id": "8a2dacb0aed58fd2edd559cf",
+              "score": 0.67864186,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+              "source_id": 3,
+              "requirement_id": 3,
+              "quote": "\nThis works even if there is a mixture of Pods in the Service using a single\nconfigured name, with the same network protocol available via different\nport numbers. This offers a lot of flexibility for deploying and evolving\nyour Services. For example, you can change the port numbers that Pods expose\nin the next version of your backend software, without breaking clients.",
+              "span_start": 0,
+              "span_end": 371
+            },
+            {
+              "chunk_id": "8a2dacb0aed58fd2edd559cf",
+              "score": 0.67864186,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+              "source_id": 3,
+              "requirement_id": 4,
+              "quote": "The default protocol for Services is\n[TCP](https://v1-35.docs.kubernetes.io/docs/reference/networking/service-protocols/#protocol-tcp); you can also\nuse any other [supported protocol](https://v1-35.docs.kubernetes.io/docs/reference/networking/service-protocols/).",
+              "span_start": 373,
+              "span_end": 636
+            }
+          ],
+          "max_hops": 3,
+          "hops": [
+            {
+              "query": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+              "target_requirement_id": 1,
+              "chunk_ids": [
+                "689192d050492eb5b5b247ea",
+                "d5e6c55112c4e6be7739d83c",
+                "8a2dacb0aed58fd2edd559cf"
+              ],
+              "new_chunks": 3,
+              "usage": {
+                "attempts": 1,
+                "calls": [
+                  {
+                    "model": "glm4:9b",
+                    "prompt_eval_count": 1246,
+                    "eval_count": 319,
+                    "total_duration": 58317409458
+                  }
+                ]
+              },
+              "evidence": [
+                {
+                  "chunk_id": "689192d050492eb5b5b247ea",
+                  "score": 0.71949875,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+                  "source_id": 1,
+                  "requirement_id": 1,
+                  "quote": "\nPort definitions in Pods have names, and you can reference these names in the\n`targetPort` attribute of a Service. For example, we can bind the `targetPort`\nof the Service to the Pod port in the following way:",
+                  "span_start": 0,
+                  "span_end": 210
+                },
+                {
+                  "chunk_id": "d5e6c55112c4e6be7739d83c",
+                  "score": 0.70473623,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service",
+                  "source_id": 2,
+                  "requirement_id": 1,
+                  "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+                  "span_start": 933,
+                  "span_end": 1086
+                },
+                {
+                  "chunk_id": "d5e6c55112c4e6be7739d83c",
+                  "score": 0.70473623,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service",
+                  "source_id": 2,
+                  "requirement_id": 2,
+                  "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+                  "span_start": 933,
+                  "span_end": 1086
+                },
+                {
+                  "chunk_id": "8a2dacb0aed58fd2edd559cf",
+                  "score": 0.67864186,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+                  "source_id": 3,
+                  "requirement_id": 3,
+                  "quote": "\nThis works even if there is a mixture of Pods in the Service using a single\nconfigured name, with the same network protocol available via different\nport numbers. This offers a lot of flexibility for deploying and evolving\nyour Services. For example, you can change the port numbers that Pods expose\nin the next version of your backend software, without breaking clients.",
+                  "span_start": 0,
+                  "span_end": 371
+                },
+                {
+                  "chunk_id": "8a2dacb0aed58fd2edd559cf",
+                  "score": 0.67864186,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service > Port definitions {#field-spec-ports}",
+                  "source_id": 3,
+                  "requirement_id": 4,
+                  "quote": "The default protocol for Services is\n[TCP](https://v1-35.docs.kubernetes.io/docs/reference/networking/service-protocols/#protocol-tcp); you can also\nuse any other [supported protocol](https://v1-35.docs.kubernetes.io/docs/reference/networking/service-protocols/).",
+                  "span_start": 373,
+                  "span_end": 636
+                }
+              ],
+              "rejected_evidence": [],
+              "context_chunk_ids": [
+                "689192d050492eb5b5b247ea",
+                "d5e6c55112c4e6be7739d83c",
+                "8a2dacb0aed58fd2edd559cf"
+              ],
+              "next_query": null,
+              "missing_requirement_ids": []
+            }
+          ],
+          "stop_reason": "requirements_covered",
+          "retrieved_chunks": 3,
+          "context_chunks": 5,
+          "context_chunk_ids": [
+            "689192d050492eb5b5b247ea",
+            "d5e6c55112c4e6be7739d83c",
+            "d5e6c55112c4e6be7739d83c",
+            "8a2dacb0aed58fd2edd559cf",
+            "8a2dacb0aed58fd2edd559cf"
+          ],
+          "retrieval_seconds": 0.19082495901966467,
+          "total_seconds": 111.8848804999725,
+          "usage": {
+            "planning": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 243,
+                  "eval_count": 251,
+                  "total_duration": 32226774458
+                }
+              ]
+            },
+            "answer": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 1159,
+                  "eval_count": 37,
+                  "total_duration": 21093929792
+                }
+              ]
+            }
+          }
+        }
+      },
+      "provenance_passed": true,
+      "answer_passed": false,
+      "transport": "HTTP"
+    },
+    {
+      "kind": "out_of_scope",
+      "question": "Как приготовить шарлотку с яблоками?",
+      "top_k": 3,
+      "status": 200,
+      "seconds": 0.39436662499792874,
+      "response": {
+        "question": "Как приготовить шарлотку с яблоками?",
+        "answer": "В найденной документации недостаточно информации для подтверждённого ответа. Уточните вопрос или расширьте корпус.",
+        "citations": [],
+        "insufficient_context": true,
+        "metadata": {
+          "architecture": "planned-evidence-multihop-v1",
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42,
+            "verify_answers": false
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "requirements": [],
+          "missing_requirement_ids": [],
+          "coverage_method": "model-selected exact quotes; semantic entailment is not verified",
+          "evidence": [],
+          "max_hops": 3,
+          "hops": [],
+          "stop_reason": "no_context",
+          "retrieved_chunks": 0,
+          "context_chunks": 0,
+          "context_chunk_ids": [],
+          "retrieval_seconds": 0.3906522920005955,
+          "total_seconds": 0.39066570898285136,
+          "usage": {}
+        }
+      },
+      "provenance_passed": true,
+      "answer_passed": true,
+      "transport": "HTTP"
+    },
+    {
+      "kind": "service_final",
+      "transport": "CLI",
+      "top_k": 3,
+      "seconds": 78.18441345804604,
+      "response": {
+        "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+        "answer": "Клиент обращается на порт 80, трафик попадает на порт 9376 в Pod\n\nИсточники: [1] [2]",
+        "citations": [
+          {
+            "id": 1,
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "page": null,
+            "snippet": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+            "score": 0.70473623
+          },
+          {
+            "id": 2,
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "page": null,
+            "snippet": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+            "score": 0.70473623
+          }
+        ],
+        "insufficient_context": false,
+        "metadata": {
+          "architecture": "planned-evidence-multihop-v1",
+          "llm_model": "glm4:9b",
+          "generation": {
+            "context_window": 32768,
+            "max_tokens": 1024,
+            "temperature": 0,
+            "seed": 42,
+            "verify_answers": false
+          },
+          "collection": "eval_config_4f81592daeca8af76b57",
+          "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+          "requirements": [
+            {
+              "id": 1,
+              "question": "На какой порт обращается клиент",
+              "query": "What is the client's port of communication when port: 80 and targetPort: 9376 are set in Service?"
+            },
+            {
+              "id": 2,
+              "question": "на какой порт Pod попадёт трафик?",
+              "query": "What port does the traffic reach in the Pod when port: 80 and targetPort: 9376 are set in Service?"
+            }
+          ],
+          "missing_requirement_ids": [],
+          "coverage_method": "model-selected exact quotes; semantic entailment is not verified",
+          "evidence": [
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "score": 0.70473623,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service",
+              "source_id": 2,
+              "requirement_id": 1,
+              "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+              "span_start": 933,
+              "span_end": 1086
+            },
+            {
+              "chunk_id": "d5e6c55112c4e6be7739d83c",
+              "score": 0.70473623,
+              "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+              "source_path": "content/en/docs/concepts/services-networking/service.md",
+              "section": "Service > Defining a Service",
+              "source_id": 2,
+              "requirement_id": 2,
+              "quote": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+              "span_start": 0,
+              "span_end": 311
+            }
+          ],
+          "max_hops": 3,
+          "hops": [
+            {
+              "query": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+              "target_requirement_id": 1,
+              "chunk_ids": [
+                "689192d050492eb5b5b247ea",
+                "d5e6c55112c4e6be7739d83c",
+                "8a2dacb0aed58fd2edd559cf"
+              ],
+              "new_chunks": 3,
+              "usage": {
+                "attempts": 1,
+                "calls": [
+                  {
+                    "model": "glm4:9b",
+                    "prompt_eval_count": 1099,
+                    "eval_count": 177,
+                    "total_duration": 43344259542
+                  }
+                ]
+              },
+              "evidence": [
+                {
+                  "chunk_id": "d5e6c55112c4e6be7739d83c",
+                  "score": 0.70473623,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service",
+                  "source_id": 2,
+                  "requirement_id": 1,
+                  "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+                  "span_start": 933,
+                  "span_end": 1086
+                },
+                {
+                  "chunk_id": "d5e6c55112c4e6be7739d83c",
+                  "score": 0.70473623,
+                  "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                  "source_path": "content/en/docs/concepts/services-networking/service.md",
+                  "section": "Service > Defining a Service",
+                  "source_id": 2,
+                  "requirement_id": 2,
+                  "quote": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+                  "span_start": 0,
+                  "span_end": 311
+                }
+              ],
+              "rejected_evidence": [],
+              "context_chunk_ids": [
+                "689192d050492eb5b5b247ea",
+                "d5e6c55112c4e6be7739d83c",
+                "8a2dacb0aed58fd2edd559cf"
+              ],
+              "next_query": null,
+              "missing_requirement_ids": []
+            }
+          ],
+          "stop_reason": "requirements_covered",
+          "retrieved_chunks": 3,
+          "context_chunks": 2,
+          "context_chunk_ids": [
+            "d5e6c55112c4e6be7739d83c",
+            "d5e6c55112c4e6be7739d83c"
+          ],
+          "retrieval_seconds": 6.6185839580139145,
+          "total_seconds": 78.18441345804604,
+          "usage": {
+            "planning": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 261,
+                  "eval_count": 92,
+                  "total_duration": 13697853041
+                }
+              ]
+            },
+            "answer": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 648,
+                  "eval_count": 39,
+                  "total_duration": 13788539458
+                }
+              ]
+            }
+          }
+        }
+      },
+      "provenance_passed": true,
+      "answer_passed": true
+    }
+  ],
+  "run": "projects/ad-shinyakov/lab2/evaluation/runs/20261029T204839Z_planned_evidence",
+  "health": {
+    "status": "ok",
+    "collection": "eval_config_4f81592daeca8af76b57",
+    "llm_model": "glm4:9b"
+  },
+  "tests": {
+    "passed": 66,
+    "skipped": 1
+  }
+}

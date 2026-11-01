@@ -1,0 +1,781 @@
+{
+  "schema_version": 1,
+  "language": "ru",
+  "corpus": {
+    "name": "Kubernetes Concepts",
+    "language": "en",
+    "git_ref": "release-1.35",
+    "source_commit": "8817d358864b70a9710c5ad34f78df6a239be33d"
+  },
+  "annotation_method": "Assistant-authored questions, answers, claims and exact supporting excerpts checked against local source documents; gold sources selected without embedding retrieval.",
+  "questions": [
+    {
+      "id": "q01",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "В Service заданы port: 80 и targetPort: 9376. На какой порт обращается клиент, на какой порт Pod попадёт трафик и что будет, если targetPort не указать?",
+      "reference_answer": "Клиент обращается к порту 80 Service, а Service направляет трафик на TCP-порт 9376 выбранных Pod. Если targetPort не задан, он по умолчанию равен port, то есть в этом примере 80.",
+      "reasoning_steps": [
+        "Прочитать пример Service и правило значения targetPort по умолчанию."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Пример публикует порт Service 80 и направляет его на порт Pod 9376.",
+          "source_path": "content/en/docs/concepts/services-networking/service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+          "document_path": "docs/concepts/services-networking/service.md",
+          "quote": "port: 80\n      targetPort: 9376",
+          "id": "q01-e01"
+        },
+        {
+          "claim": "Service направляет трафик к выбранным Pod на TCP-порт 9376.",
+          "source_path": "content/en/docs/concepts/services-networking/service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+          "document_path": "docs/concepts/services-networking/service.md",
+          "quote": "targets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+          "id": "q01-e02"
+        },
+        {
+          "claim": "Если targetPort не задан, он равен port.",
+          "source_path": "content/en/docs/concepts/services-networking/service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+          "document_path": "docs/concepts/services-networking/service.md",
+          "quote": "By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+          "id": "q01-e03"
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Приложение долго запускается. Чем различаются последствия провала livenessProbe и readinessProbe и как startupProbe защищает период запуска?",
+      "reference_answer": "При провале livenessProbe kubelet останавливает контейнер, после чего действует restartPolicy. Провал readinessProbe означает, что контейнер не готов обслуживать запросы; это влияет на включение Pod в бэкенды Service, а не само по себе вызывает перезапуск. Пока startupProbe не успешна, остальные probes отключены; её провал приводит к остановке контейнера с последующим применением restartPolicy.",
+      "reasoning_steps": [
+        "Сопоставить три вида probes в одном разделе Pod Lifecycle."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Liveness failure приводит к остановке контейнера.",
+          "source_path": "content/en/docs/concepts/workloads/pods/pod-lifecycle.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+          "document_path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+          "quote": "If\nthe liveness probe fails, the kubelet kills the container",
+          "id": "q02-e01"
+        },
+        {
+          "claim": "Readiness управляет пригодностью Pod для запросов Service.",
+          "source_path": "content/en/docs/concepts/workloads/pods/pod-lifecycle.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+          "document_path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+          "quote": "If the readiness probe fails, the EndpointSlice\ncontroller removes the Pod's IP address from the EndpointSlices of all Services that match the Pod.",
+          "id": "q02-e02"
+        },
+        {
+          "claim": "Startup probe временно отключает другие проверки.",
+          "source_path": "content/en/docs/concepts/workloads/pods/pod-lifecycle.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+          "document_path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+          "quote": "All other probes are disabled if a startup probe is provided, until it succeeds.",
+          "id": "q02-e03"
+        },
+        {
+          "claim": "Провал startup probe приводит к остановке контейнера.",
+          "source_path": "content/en/docs/concepts/workloads/pods/pod-lifecycle.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+          "document_path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+          "quote": "If the startup probe fails, the kubelet kills the container",
+          "id": "q02-e04"
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Обновил ConfigMap, но файл в контейнере не изменился. Чем обычное монтирование ConfigMap в volume отличается от монтирования через subPath?",
+      "reference_answer": "При обычном монтировании ConfigMap в volume проецируемые ключи обновляются со временем, а не обязательно немедленно: есть период синхронизации kubelet и задержка кеша. Монтирование через subPath не получает обновления ConfigMap.",
+      "reasoning_steps": [
+        "Проверить правила обновления проецируемых файлов и исключение subPath."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Обычный volume в итоге получает новые значения.",
+          "source_path": "content/en/docs/concepts/configuration/configmap.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/configmap/",
+          "document_path": "docs/concepts/configuration/configmap.md",
+          "quote": "When a ConfigMap currently consumed in a volume is updated, projected keys are eventually updated as well.",
+          "id": "q03-e01"
+        },
+        {
+          "claim": "Обновление имеет задержку синхронизации и кеша.",
+          "source_path": "content/en/docs/concepts/configuration/configmap.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/configmap/",
+          "document_path": "docs/concepts/configuration/configmap.md",
+          "quote": "the total delay from the moment when the ConfigMap is updated to the moment\nwhen new keys are projected to the Pod can be as long as the kubelet sync period + cache\npropagation delay",
+          "id": "q03-e02"
+        },
+        {
+          "claim": "subPath не получает обновления.",
+          "source_path": "content/en/docs/concepts/configuration/configmap.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/configmap/",
+          "document_path": "docs/concepts/configuration/configmap.md",
+          "quote": "A container using a ConfigMap as a [subPath](https://v1-35.docs.kubernetes.io/docs/concepts/storage/volumes#using-subpath) volume mount will not receive ConfigMap updates.",
+          "id": "q03-e03"
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Как записать пароль в Secret без ручного base64-кодирования? Какое значение выберется, если одинаковый ключ задан в data и stringData?",
+      "reference_answer": "Для обычных строк можно использовать stringData; значения data должны быть base64-кодированными. stringData объединяется с data, и при совпадении ключа приоритет имеет stringData.",
+      "reasoning_steps": [
+        "Прочитать ограничения data/stringData и правило приоритета ключей."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "stringData принимает строки, data — base64.",
+          "source_path": "content/en/docs/concepts/configuration/secret.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/secret/",
+          "document_path": "docs/concepts/configuration/secret.md",
+          "quote": "The values for all keys in the `data` field have to be base64-encoded strings.\nIf the conversion to base64 string is not desirable, you can choose to specify\nthe `stringData` field instead, which accepts arbitrary strings as values.",
+          "id": "q04-e01"
+        },
+        {
+          "claim": "stringData имеет приоритет.",
+          "source_path": "content/en/docs/concepts/configuration/secret.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/secret/",
+          "document_path": "docs/concepts/configuration/secret.md",
+          "quote": "If a key appears in both the `data` and the\n`stringData` field, the value specified in the `stringData` field takes\nprecedence.",
+          "id": "q04-e02"
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Для чего Kubernetes использует requests и limits? Может ли контейнер использовать больше CPU или памяти, чем указано в request?",
+      "reference_answer": "Scheduler использует requests при выборе узла, а limits ограничивают потребление при выполнении. При наличии свободных ресурсов контейнер может использовать больше своего request; request не является верхним пределом. CPU limit обеспечивается throttling, а memory limit — реактивными OOM kills при давлении на память, поэтому превышение памяти не обязательно приводит к немедленному завершению.",
+      "reasoning_steps": [
+        "Различить назначение requests и limits и механизмы ограничения CPU и памяти."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Scheduler планирует размещение по requests.",
+          "source_path": "content/en/docs/concepts/configuration/manage-resources-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "document_path": "docs/concepts/configuration/manage-resources-containers.md",
+          "quote": "When you specify the resource *request* for containers in a Pod, the\nkube-scheduler uses this information to decide which node to place the Pod on.",
+          "id": "q05-e01"
+        },
+        {
+          "claim": "Request допускает превышение при наличии ресурсов.",
+          "source_path": "content/en/docs/concepts/configuration/manage-resources-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "document_path": "docs/concepts/configuration/manage-resources-containers.md",
+          "quote": "it's possible (and\nallowed) for a container to use more resource than its `request` for that resource specifies.",
+          "id": "q05-e02"
+        },
+        {
+          "claim": "CPU ограничивается throttling.",
+          "source_path": "content/en/docs/concepts/configuration/manage-resources-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "document_path": "docs/concepts/configuration/manage-resources-containers.md",
+          "quote": "`cpu` limits are enforced by CPU throttling.",
+          "id": "q05-e03"
+        },
+        {
+          "claim": "Ограничение памяти реактивное.",
+          "source_path": "content/en/docs/concepts/configuration/manage-resources-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "document_path": "docs/concepts/configuration/manage-resources-containers.md",
+          "quote": "`memory` limits are enforced by the kernel with out of memory (OOM) kills.",
+          "id": "q05-e04"
+        },
+        {
+          "claim": "OOM kill не обязательно мгновенный.",
+          "source_path": "content/en/docs/concepts/configuration/manage-resources-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "document_path": "docs/concepts/configuration/manage-resources-containers.md",
+          "quote": "terminations only happen when the kernel detects memory pressure.",
+          "id": "q05-e05"
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Что ограничивают maxUnavailable и maxSurge при RollingUpdate Deployment и как округляются проценты в этих параметрах?",
+      "reference_answer": "maxUnavailable ограничивает число недоступных Pod относительно желаемого числа реплик; процент округляется вниз. maxSurge разрешает дополнительные Pod сверх желаемого числа; процент округляется вверх. По умолчанию оба равны 25%; одновременно задавать оба равными нулю нельзя. Завершающиеся Pod могут временно увеличивать фактическое число существующих Pod.",
+      "reasoning_steps": [
+        "Прочитать определения и округления параметров RollingUpdate, учесть terminating Pods."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "maxUnavailable округляется вниз.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "The absolute number is calculated from percentage by\nrounding down.",
+          "id": "q06-e01"
+        },
+        {
+          "claim": "maxSurge округляется вверх.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "The absolute number\nis calculated from the percentage by rounding up.",
+          "id": "q06-e02"
+        },
+        {
+          "claim": "Одновременно оба параметра не могут быть нулевыми.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "The value cannot be 0 if `.spec.strategy.rollingUpdate.maxSurge` is 0. The default value is 25%.",
+          "id": "q06-e03"
+        },
+        {
+          "claim": "Завершающиеся Pod могут давать превышение ожидаемого количества.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "the total resources consumed by the Deployment is more than `replicas + maxSurge`\nuntil the `terminationGracePeriodSeconds` of the terminating Pods expires.",
+          "id": "q06-e04"
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Pod в namespace test не находит Service data из namespace prod по короткому имени data. Какое DNS-имя нужно использовать и почему?",
+      "reference_answer": "Короткое имя ищется прежде всего в namespace самого Pod. Для Service из prod нужно указать namespace: data.prod; полное имя при домене cluster.local — data.prod.svc.cluster.local.",
+      "reasoning_steps": [
+        "Проверить namespace в DNS search list и правила обращения к Service другого namespace."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Короткий DNS-запрос ограничен namespace Pod.",
+          "source_path": "content/en/docs/concepts/services-networking/dns-pod-service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/",
+          "document_path": "docs/concepts/services-networking/dns-pod-service.md",
+          "quote": "DNS queries that don't specify a namespace are limited to the Pod's\nnamespace. Access Services in other namespaces by specifying it in the DNS query.",
+          "id": "q07-e01"
+        },
+        {
+          "claim": "У Service есть имя svc.namespace.svc.domain.",
+          "source_path": "content/en/docs/concepts/services-networking/dns-pod-service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/",
+          "document_path": "docs/concepts/services-networking/dns-pod-service.md",
+          "quote": "`my-svc.my-namespace.svc.cluster-domain.example`. This resolves to the cluster IP\nof the Service.",
+          "id": "q07-e02"
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Почему основной контейнер не стартует, пока обычные init containers не завершились? Можно ли обычному init container добавить readinessProbe?",
+      "reference_answer": "Обычные init containers выполняются последовательно; каждый должен успешно завершиться до следующего, а приложение запускается после завершения всех. Обычные init containers не поддерживают readinessProbe (как и lifecycle, livenessProbe, startupProbe). Это ограничение не следует переносить на native sidecar containers.",
+      "reasoning_steps": [
+        "Прочитать порядок обычных init containers и отличие от sidecar."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Приложение запускается после последовательного успешного завершения init containers.",
+          "source_path": "content/en/docs/concepts/workloads/pods/init-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/init-containers/",
+          "document_path": "docs/concepts/workloads/pods/init-containers.md",
+          "quote": "If you specify multiple init containers for a Pod, kubelet runs each init\ncontainer sequentially. Each init container must succeed before the next can run.\nWhen all of the init containers have run to completion, kubelet initializes\nthe application containers for the Pod and runs them as usual.",
+          "id": "q08-e01"
+        },
+        {
+          "claim": "У обычных init containers probes отсутствуют.",
+          "source_path": "content/en/docs/concepts/workloads/pods/init-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/init-containers/",
+          "document_path": "docs/concepts/workloads/pods/init-containers.md",
+          "quote": "Regular init containers (in other words: excluding sidecar containers) do not support the\n`lifecycle`, `livenessProbe`, `readinessProbe`, or `startupProbe` fields.",
+          "id": "q08-e02"
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Если несколько NetworkPolicy выбирают один Pod, какая из них имеет приоритет? Достаточно ли разрешить ingress на получателе, когда отправитель изолирован по egress?",
+      "reference_answer": "Политики аддитивны: разрешения объединяются, порядок и приоритет не определяют результат. Для соединения должны разрешать трафик обе стороны: egress отправителя и ingress получателя. Одного разрешающего ingress недостаточно, если egress запрещает соединение. Предполагается, что сетевой плагин поддерживает NetworkPolicy.",
+      "reasoning_steps": [
+        "Проверить объединение политик и условия разрешения соединения между двумя Pod."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "Разрешения политик объединяются.",
+          "source_path": "content/en/docs/concepts/services-networking/network-policies.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/network-policies/",
+          "document_path": "docs/concepts/services-networking/network-policies.md",
+          "quote": "Network policies do not conflict; they are additive.",
+          "id": "q09-e01"
+        },
+        {
+          "claim": "Нужны разрешения egress источника и ingress назначения.",
+          "source_path": "content/en/docs/concepts/services-networking/network-policies.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/network-policies/",
+          "document_path": "docs/concepts/services-networking/network-policies.md",
+          "quote": "For a connection from a source pod to a destination pod to be allowed, both the egress policy on\nthe source pod and the ingress policy on the destination pod need to allow the connection.",
+          "id": "q09-e02"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "single_hop",
+      "reasoning_type": "lookup",
+      "question": "Гарантирует ли ReadWriteOnce, что PVC использует только один Pod? Какой режим нужен, если доступ на запись должен иметь ровно один Pod во всём кластере?",
+      "reference_answer": "ReadWriteOnce ограничивает read-write доступ одним узлом, но допускает несколько Pod на этом узле. Для ограничения одним Pod нужен ReadWriteOncePod; этот режим поддерживается CSI volumes и требует совместимых версий компонентов.",
+      "reasoning_steps": [
+        "Различить ограничения по узлу и по Pod в Access Modes."
+      ],
+      "required_source_count": 1,
+      "evidence": [
+        {
+          "claim": "RWO допускает несколько Pod одного узла.",
+          "source_path": "content/en/docs/concepts/storage/persistent-volumes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "document_path": "docs/concepts/storage/persistent-volumes.md",
+          "quote": "ReadWriteOnce access\nmode still can allow multiple pods to access (read from or write to) that volume when the pods are\nrunning on the same node.",
+          "id": "q10-e01"
+        },
+        {
+          "claim": "RWOP ограничивает доступ одним Pod.",
+          "source_path": "content/en/docs/concepts/storage/persistent-volumes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "document_path": "docs/concepts/storage/persistent-volumes.md",
+          "quote": "the volume can be mounted as read-write by a single Pod. Use ReadWriteOncePod\naccess mode if you want to ensure that only one pod across the whole cluster can\nread that PVC or write to it.",
+          "id": "q10-e02"
+        },
+        {
+          "claim": "RWOP поддерживается для CSI volumes.",
+          "source_path": "content/en/docs/concepts/storage/persistent-volumes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "document_path": "docs/concepts/storage/persistent-volumes.md",
+          "quote": "The `ReadWriteOncePod` access mode is only supported for\nCSI volumes",
+          "id": "q10-e03"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multi_hop",
+      "reasoning_type": "bridge",
+      "question": "Deployment передаёт настройки из ConfigMap через env. Я изменил только ConfigMap и затем увеличил replicas, но в уже работающих контейнерах старые значения. Почему и как обновить все реплики управляемым rollout?",
+      "reference_answer": "Переменные окружения из ConfigMap не обновляются автоматически — контейнерам нужен перезапуск. Изменение только ConfigMap не меняет Pod template Deployment, а изменение replicas само по себе не запускает rollout. Для управляемого обновления всех реплик нужно изменить spec.template, например annotation с версией/хешем конфигурации, чтобы Deployment создал заменяющие Pod с новыми значениями. Новые Pod при масштабировании не обновляют окружение уже существующих.",
+      "reasoning_steps": [
+        "Установить, что env из ConfigMap фиксируется при запуске.",
+        "Найти условие запуска rollout у Deployment.",
+        "Связать обновление конфигурации с изменением Pod template, а не только replicas."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Env из ConfigMap требует перезапуска.",
+          "source_path": "content/en/docs/concepts/configuration/configmap.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/configuration/configmap/",
+          "document_path": "docs/concepts/configuration/configmap.md",
+          "quote": "ConfigMaps consumed as environment variables are not updated automatically and require a pod restart.",
+          "id": "q11-e01"
+        },
+        {
+          "claim": "Rollout вызывается только изменением Pod template; scaling не вызывает его.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, `.spec.template`)\nis changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.",
+          "id": "q11-e02"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multi_hop",
+      "reasoning_type": "bridge",
+      "question": "Контейнер остаётся Running и проходит livenessProbe, но readinessProbe падает. Как это связано с serving и ready в EndpointSlice и почему publishNotReadyAddresses=true меняет трактовку ready?",
+      "reference_answer": "Успешная liveness не заменяет readiness: провал readiness делает Pod непригодным для обычного трафика Service без обязательного перезапуска контейнера. У endpoint, связанного с Pod, serving соответствует Pod Ready; ready обычно означает serving и отсутствие terminating. Поэтому при неготовом, незавершающемся Pod обычно serving=false и ready=false. Для Service с publishNotReadyAddresses=true условие ready принудительно true и больше не доказывает готовность приложения.",
+      "reasoning_steps": [
+        "Различить liveness и readiness.",
+        "Связать Pod readiness с serving endpoint.",
+        "Применить определение ready и исключение publishNotReadyAddresses."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Readiness определяет возможность обслуживать запросы.",
+          "source_path": "content/en/docs/concepts/workloads/pods/pod-lifecycle.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/",
+          "document_path": "docs/concepts/workloads/pods/pod-lifecycle.md",
+          "quote": "`readinessProbe`\n: Indicates whether the container is ready to respond to requests.",
+          "id": "q12-e01"
+        },
+        {
+          "claim": "serving отображает Ready Pod.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "For endpoints backed by a Pod, this\nmaps to the Pod's `Ready` condition.",
+          "id": "q12-e02"
+        },
+        {
+          "claim": "ready обычно serving и не terminating; publishNotReadyAddresses — исключение.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "The `ready` condition is essentially a shortcut for checking\n\"`serving` and not `terminating`\" (though it will also always be\n`true` for Services with `spec.publishNotReadyAddresses` set to\n`true`).",
+          "id": "q12-e03"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multi_hop",
+      "reasoning_type": "bridge",
+      "question": "Есть StatefulSet db с serviceName=db-headless в namespace prod, обычной нумерацией с нуля и доменом cluster.local. Headless Service имеет именованный TCP-порт sql:5432. Какое имя будет у первого Pod и что вернёт SRV-запрос для sql?",
+      "reference_answer": "Первый Pod называется db-0, его полное DNS-имя — db-0.db-headless.prod.svc.cluster.local. SRV-запрос _sql._tcp.db-headless.prod.svc.cluster.local для headless Service возвращает ответы по обслуживающим Pod с номером порта 5432 и DNS-именами этих Pod, включая db-0.db-headless.prod.svc.cluster.local, когда Pod опубликован в DNS. Предполагается, что Headless Service создан и выбирает эти Pod.",
+      "reasoning_steps": [
+        "Вывести hostname и домен Pod из правил StatefulSet.",
+        "Найти формат SRV для именованного порта headless Service.",
+        "Подставить имя, namespace, домен и порт из условия."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Hostname Pod StatefulSet определяется именем и ordinal.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "document_path": "docs/concepts/workloads/controllers/statefulset.md",
+          "quote": "The pattern for the constructed hostname\nis `$(statefulset name)-$(ordinal)`.",
+          "id": "q13-e01"
+        },
+        {
+          "claim": "Домен Pod задаётся serviceName.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "document_path": "docs/concepts/workloads/controllers/statefulset.md",
+          "quote": "As each Pod is created, it gets a matching DNS subdomain, taking the form:\n`$(podname).$(governing service domain)`, where the governing service is defined\nby the `serviceName` field on the StatefulSet.",
+          "id": "q13-e02"
+        },
+        {
+          "claim": "SRV использует имя и протокол порта.",
+          "source_path": "content/en/docs/concepts/services-networking/dns-pod-service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/",
+          "document_path": "docs/concepts/services-networking/dns-pod-service.md",
+          "quote": "`_port-name._port-protocol.my-svc.my-namespace.svc.cluster-domain.example`.",
+          "id": "q13-e03"
+        },
+        {
+          "claim": "Headless SRV возвращает отдельные ответы по Pod.",
+          "source_path": "content/en/docs/concepts/services-networking/dns-pod-service.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/dns-pod-service/",
+          "document_path": "docs/concepts/services-networking/dns-pod-service.md",
+          "quote": "For a headless Service, this resolves to multiple answers, one for each Pod\n  that is backing the Service, and contains the port number and the domain name of the Pod",
+          "id": "q13-e04"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multi_hop",
+      "reasoning_type": "bridge",
+      "question": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PV стоит reclaimPolicy: Delete и CSI-драйвер поддерживает удаление. Удаление StatefulSet сразу удалит данные? Что изменится, если затем вручную удалить оставшийся PVC?",
+      "reference_answer": "По умолчанию StatefulSet использует Retain для PVC: удаление самого StatefulSet не удаляет автоматически его claims, поэтому Delete у PV сам по себе ещё не запускает удаление хранилища. После удаления и освобождения PVC reclaimPolicy Delete позволяет удалить PV и соответствующий storage asset. Это разные уровни политики; обработка асинхронная и учитывает защиту используемых объектов.",
+      "reasoning_steps": [
+        "Установить политику сохранения PVC у StatefulSet по умолчанию.",
+        "Проследить освобождение claim до reclaim policy PV.",
+        "Различить удаление StatefulSet и явное удаление PVC."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "По умолчанию PVC сохраняются.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "document_path": "docs/concepts/workloads/controllers/statefulset.md",
+          "quote": "The default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+          "id": "q14-e01"
+        },
+        {
+          "claim": "Retain не затрагивает PVC при удалении Pod.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "document_path": "docs/concepts/workloads/controllers/statefulset.md",
+          "quote": "`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted.",
+          "id": "q14-e02"
+        },
+        {
+          "claim": "Delete удаляет PV и storage asset.",
+          "source_path": "content/en/docs/concepts/storage/persistent-volumes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "document_path": "docs/concepts/storage/persistent-volumes.md",
+          "quote": "deletion removes\nboth the PersistentVolume object from Kubernetes, as well as the associated\nstorage asset in the external infrastructure.",
+          "id": "q14-e03"
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multi_hop",
+      "reasoning_type": "constraint_composition",
+      "question": "Pod использует локальный PV с nodeAffinity на зону zone-a, но сам Pod требует zone-b через nodeSelector. Может ли режим WaitForFirstConsumer сам устранить конфликт, если ограничения Pod и существующего PV не менять?",
+      "reference_answer": "Нет. Pod, использующий PV, может быть запланирован только на узлы, разрешённые nodeAffinity PV; одновременно должны выполняться ограничения самого Pod. WaitForFirstConsumer откладывает выбор/создание и привязку тома до появления потребителя и учитывает его ограничения, но сам не делает существующий локальный том доступным в другой зоне. При непересекающихся требованиях нужны изменения Pod, выбора тома или размещения данных.",
+      "reasoning_steps": [
+        "Установить ограничение узлов для Pod, использующего PV.",
+        "Проверить, что WaitForFirstConsumer меняет момент привязки и учитывает ограничения Pod.",
+        "Определить отсутствие совместимого размещения при неизменных конфликтующих требованиях."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Node affinity PV ограничивает узлы размещения потребителя.",
+          "source_path": "content/en/docs/concepts/storage/persistent-volumes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "document_path": "docs/concepts/storage/persistent-volumes.md",
+          "quote": "A PV can specify node affinity to define constraints that limit what nodes this\nvolume can be accessed from. Pods that use a PV will only be scheduled to nodes\nthat are selected by the node affinity.",
+          "id": "q15-e01"
+        },
+        {
+          "claim": "WFFC откладывает выбор/создание тома и согласует topology с Pod.",
+          "source_path": "content/en/docs/concepts/storage/storage-classes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/storage/storage-classes/",
+          "document_path": "docs/concepts/storage/storage-classes.md",
+          "quote": "will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.\nPersistentVolumes will be selected or provisioned conforming to the topology that is\nspecified by the Pod's scheduling constraints.",
+          "id": "q15-e02"
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multi_hop",
+      "reasoning_type": "bridge_numeric",
+      "question": "В каждом Pod один контейнер. В исходном YAML не указан CPU request, но LimitRange при создании подставляет defaultRequest.cpu=100m. HPA использует averageUtilization=50%. Есть две готовые реплики, каждая потребляет 100m CPU. Какой utilization и desiredReplicas получатся без пропущенных метрик, ограничений min/max и стабилизации?",
+      "reference_answer": "После admission у каждого контейнера request=100m благодаря LimitRange. Потребление 100m означает 100% utilization относительно request. Отношение текущего utilization к целевому равно 100/50=2, поэтому desiredReplicas=ceil(2×2)=4. Отсутствие request в исходном YAML не означает, что request отсутствует в созданном Pod.",
+      "reasoning_steps": [
+        "Найти автоматическую подстановку request через LimitRange.",
+        "Определить знаменатель CPU utilization в HPA.",
+        "Применить формулу ceil(currentReplicas × current/target)."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "LimitRange подставляет defaults.",
+          "source_path": "content/en/docs/concepts/policy/limit-range.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/policy/limit-range/",
+          "document_path": "docs/concepts/policy/limit-range.md",
+          "quote": "Set default request/limit for compute resources in a namespace and automatically\n  inject them to Containers at runtime.",
+          "id": "q16-e01"
+        },
+        {
+          "claim": "Utilization считается относительно request.",
+          "source_path": "content/en/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
+          "document_path": "docs/concepts/workloads/autoscaling/horizontal-pod-autoscale.md",
+          "quote": "Then, if a target utilization value is set, the controller calculates the utilization\n  value as a percentage of the equivalent\n  [resource request](https://v1-35.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)\n  on the containers in each Pod.",
+          "id": "q16-e02"
+        },
+        {
+          "claim": "Число реплик определяется отношением метрик с округлением вверх.",
+          "source_path": "content/en/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
+          "document_path": "docs/concepts/workloads/autoscaling/horizontal-pod-autoscale.md",
+          "quote": "desiredReplicas = ceil\\left\\lceil currentReplicas \\times \\frac{currentMetricValue}{desiredMetricValue} \\right\\rceil",
+          "id": "q16-e03"
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "multi_hop",
+      "reasoning_type": "exception_composition",
+      "question": "Узел пометили unschedulable командой cordon. Почему обычные новые Pod на него не назначаются, существующие продолжают работать, а новый Pod DaemonSet всё же может появиться?",
+      "reference_answer": "Cordon запрещает scheduler размещать новые обычные Pod, но не выселяет уже работающие. Контроллер DaemonSet автоматически добавляет toleration node.kubernetes.io/unschedulable:NoSchedule, поэтому DaemonSet Pod может быть назначен на такой узел при выполнении остальных ограничений.",
+      "reasoning_steps": [
+        "Определить влияние cordon на новые и существующие Pod.",
+        "Найти автоматически добавляемую toleration DaemonSet.",
+        "Объяснить исключение для DaemonSet без предположения, что cordon выселяет Pod."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Unschedulable не затрагивает уже работающие Pod.",
+          "source_path": "content/en/docs/concepts/architecture/nodes.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/architecture/nodes/",
+          "document_path": "docs/concepts/architecture/nodes.md",
+          "quote": "Marking a node as unschedulable prevents the scheduler from placing new pods onto\nthat Node but does not affect existing Pods on the Node.",
+          "id": "q17-e01"
+        },
+        {
+          "claim": "DaemonSet автоматически допускается на unschedulable node.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/daemonset.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+          "document_path": "docs/concepts/workloads/controllers/daemonset.md",
+          "quote": "Because the DaemonSet controller sets the\n`node.kubernetes.io/unschedulable:NoSchedule` toleration automatically,\nKubernetes can run DaemonSet Pods on nodes that are marked as *unschedulable*.",
+          "id": "q17-e02"
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "multi_hop",
+      "reasoning_type": "comparison",
+      "question": "У Deployment три Ready-реплики, PDB требует minAvailable=3, а RollingUpdate настроен maxUnavailable=1 и maxSurge=0. Одинаково ли PDB ограничит kubectl drain и rollout этого Deployment?",
+      "reference_answer": "Нет. Drain использует Eviction API и должен учитывать PDB: при трёх Ready и minAvailable=3 добровольное выселение одной реплики не допускается, пока не появится бюджет. RollingUpdate самого Deployment не ограничивается PDB, хотя недоступные Pod учитываются при расчёте бюджета для eviction. При maxUnavailable=1 и maxSurge=0 rollout может сначала снизить доступность до двух реплик; его предел задаётся стратегией Deployment.",
+      "reasoning_steps": [
+        "Установить применение PDB к Eviction API/drain.",
+        "Найти исключение для rolling updates контроллера.",
+        "Применить maxUnavailable Deployment к заданному числу реплик."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "PDB ограничивает добровольные disruptions через Eviction API.",
+          "source_path": "content/en/docs/concepts/workloads/pods/disruptions.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
+          "document_path": "docs/concepts/workloads/pods/disruptions.md",
+          "quote": "Cluster managers and hosting providers should use tools which\nrespect PodDisruptionBudgets by calling the [Eviction API](https://v1-35.docs.kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/#eviction-api)\ninstead of directly deleting pods or deployments.\n\nFor example, the `kubectl drain` subcommand lets you mark a node as going out of\nservice. When you run `kubectl drain`, the tool tries to evict all of the Pods on\nthe Node you're taking out of service. The eviction request that `kubectl` submits on\nyour behalf may be temporarily rejected, so the tool periodically retries all failed\nrequests until all Pods on the target node are terminated, or until a configurable timeout\nis reached.",
+          "id": "q18-e01"
+        },
+        {
+          "claim": "Контроллеры workload не ограничены PDB при rolling upgrade.",
+          "source_path": "content/en/docs/concepts/workloads/pods/disruptions.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
+          "document_path": "docs/concepts/workloads/pods/disruptions.md",
+          "quote": "workload resources (such as Deployment and StatefulSet)\nare not limited by PDBs when doing rolling upgrades.",
+          "id": "q18-e02"
+        },
+        {
+          "claim": "maxUnavailable задаёт число недоступных Pod при обновлении.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "document_path": "docs/concepts/workloads/controllers/deployment.md",
+          "quote": "`.spec.strategy.rollingUpdate.maxUnavailable` is an optional field that specifies the maximum number\nof Pods that can be unavailable during the update process.",
+          "id": "q18-e03"
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "multi_hop",
+      "reasoning_type": "bridge",
+      "question": "Хочу удалять завершённые Jobs моего CronJob примерно через час, а не только хранить последние несколько запусков. Где задать TTL, от какого события он отсчитывается и могут ли history limits удалить Job раньше?",
+      "reference_answer": "Для новых Jobs задайте spec.jobTemplate.spec.ttlSecondsAfterFinished=3600 в CronJob: jobTemplate задаёт создаваемые Jobs. TTL отсчитывается от перехода Job в Complete или Failed, а не от запуска. successfulJobsHistoryLimit/failedJobsHistoryLimit ограничивают количество сохранённых Jobs независимо от TTL и могут удалить старые раньше часа. TTL означает право на последующую очистку контроллером, а не точную гарантию времени удаления или минимального срока хранения.",
+      "reasoning_steps": [
+        "Перейти от CronJob к спецификации создаваемого Job через jobTemplate.",
+        "Найти TTL finished Job и момент начала отсчёта.",
+        "Сопоставить временной TTL с количественным ограничением истории."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "jobTemplate задаёт спецификацию создаваемых Jobs.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/cron-jobs.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/",
+          "document_path": "docs/concepts/workloads/controllers/cron-jobs.md",
+          "quote": "The `.spec.jobTemplate` defines a template for the Jobs that the CronJob creates, and it is required.",
+          "id": "q19-e01"
+        },
+        {
+          "claim": "TTL настраивается в Job.spec.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/ttlafterfinished.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/",
+          "document_path": "docs/concepts/workloads/controllers/ttlafterfinished.md",
+          "quote": "by specifying the\n`.spec.ttlSecondsAfterFinished` field of a Job",
+          "id": "q19-e02"
+        },
+        {
+          "claim": "TTL начинается при Complete или Failed.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/ttlafterfinished.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/",
+          "document_path": "docs/concepts/workloads/controllers/ttlafterfinished.md",
+          "quote": "The timer starts once the\nstatus condition of the Job changes to show that the Job is either `Complete` or `Failed`; once the TTL has\nexpired, that Job becomes eligible for",
+          "id": "q19-e03"
+        },
+        {
+          "claim": "История ограничивает число сохранённых Jobs.",
+          "source_path": "content/en/docs/concepts/workloads/controllers/cron-jobs.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/",
+          "document_path": "docs/concepts/workloads/controllers/cron-jobs.md",
+          "quote": "The `.spec.successfulJobsHistoryLimit` and `.spec.failedJobsHistoryLimit` fields specify\nhow many completed and failed Jobs should be kept.",
+          "id": "q19-e04"
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "multi_hop",
+      "reasoning_type": "lifecycle_composition",
+      "question": "Pod удаляется, но приложение ещё завершает запросы, а рядом работает native sidecar-прокси. Почему sidecar не останавливают сразу и что в этот период означают serving, terminating и ready в EndpointSlice?",
+      "reference_answer": "Kubelet откладывает остановку native sidecars до полного завершения основных контейнеров, затем завершает sidecars в обратном порядке их объявления. Endpoint становится terminating после получения Pod deletion timestamp, до фактического выхода контейнеров; serving может ещё быть true, если Pod остаётся Ready. Обычно ready=false для terminating endpoint, за исключением publishNotReadyAddresses=true. Прокси обычно игнорирует terminating endpoints, но может использовать serving+terminating, если все доступные endpoints завершаются. Поэтому удаление Pod не тождественно мгновенному завершению приложения и обслуживающего sidecar.",
+      "reasoning_steps": [
+        "Установить порядок остановки native sidecars.",
+        "Связать удаление Pod с terminating endpoint, а не с мгновенным выходом процессов.",
+        "Различить serving и ready и учесть исключения маршрутизации."
+      ],
+      "required_source_count": 2,
+      "evidence": [
+        {
+          "claim": "Sidecars останавливаются после приложения, в обратном порядке.",
+          "source_path": "content/en/docs/concepts/workloads/pods/sidecar-containers.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/",
+          "document_path": "docs/concepts/workloads/pods/sidecar-containers.md",
+          "quote": "the kubelet postpones terminating sidecar containers until the main application container has fully stopped.\nThe sidecar containers are then shut down in the opposite order of their appearance in the Pod specification.",
+          "id": "q20-e01"
+        },
+        {
+          "claim": "Terminating устанавливается при deletion timestamp до остановки процессов.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "this condition is set when\nthe Pod is first deleted (that is, when it receives a deletion\ntimestamp, but most likely before the Pod's containers exit).",
+          "id": "q20-e02"
+        },
+        {
+          "claim": "Возможна маршрутизация к serving+terminating, когда все endpoints завершаются.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "they may route traffic to endpoints that are both `serving` and\n`terminating` if all available endpoints are `terminating`.",
+          "id": "q20-e03"
+        },
+        {
+          "claim": "Определение ready и исключение publishNotReadyAddresses.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "The `ready` condition is essentially a shortcut for checking\n\"`serving` and not `terminating`\" (though it will also always be\n`true` for Services with `spec.publishNotReadyAddresses` set to\n`true`).",
+          "id": "q20-e04"
+        },
+        {
+          "claim": "serving отображает Ready Pod.",
+          "source_path": "content/en/docs/concepts/services-networking/endpoint-slices.md",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/endpoint-slices/",
+          "document_path": "docs/concepts/services-networking/endpoint-slices.md",
+          "quote": "For endpoints backed by a Pod, this\nmaps to the Pod's `Ready` condition.",
+          "id": "q20-e05"
+        }
+      ]
+    }
+  ]
+}

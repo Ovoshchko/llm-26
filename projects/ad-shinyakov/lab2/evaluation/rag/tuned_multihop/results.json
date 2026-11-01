@@ -1,0 +1,809 @@
+[
+  {
+    "case": "configmap_deployment",
+    "top_k": 4,
+    "result": {
+      "question": "Deployment передаёт настройки из ConfigMap через env. Я изменил ConfigMap и увеличил replicas. Почему уже работающие Pod продолжают использовать старые значения? Как обновить все реплики управляемым rollout без изменения образа контейнера?",
+      "answer": "Running Pods continue to use old values because the Deployment's rollout is not triggered by changes in ConfigMap or scaling. To update all replicas with a managed rollout without changing the container image, you can use a *rollout* to gradually shift traffic to new healthy Pods.\n\nИсточники: [1] [2]",
+      "citations": [
+        {
+          "id": 1,
+          "chunk_id": "57686980c3ac2ad7d32d9b8d",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+          "section": "Deployments > Updating a Deployment",
+          "page": null,
+          "snippet": "A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, `.spec.template`)\nis changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.",
+          "score": 0.6914803
+        },
+        {
+          "id": 2,
+          "chunk_id": "a9bfb1748c033fbd2598b966",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/management/",
+          "source_path": "content/en/docs/concepts/workloads/management.md",
+          "section": "Managing Workloads > Updating your application without an outage",
+          "page": null,
+          "snippet": "You can run multiple copies of your app, and use a *rollout* to gradually shift the traffic to\nnew healthy Pods. Eventually, all the running Pods would have the new software.",
+          "score": 0.694788
+        }
+      ],
+      "insufficient_context": false,
+      "metadata": {
+        "architecture": "verified-evidence-multihop-v2",
+        "llm_model": "glm4:9b",
+        "generation": {
+          "context_window": 32768,
+          "max_tokens": 1024,
+          "temperature": 0,
+          "seed": 42,
+          "verify_answers": false,
+          "verify_evidence": true
+        },
+        "collection": "eval_config_4f81592daeca8af76b57",
+        "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+        "requirements": [
+          {
+            "id": 1,
+            "question": "Почему уже работающие Pod продолжают использовать старые значения?",
+            "query": "Why do running Pods continue to use old values after a ConfigMap change?"
+          },
+          {
+            "id": 2,
+            "question": "Как обновить все реплики управляемым rollout без изменения образа контейнера?",
+            "query": "How to update all replicas with a managed rollout without changing the container image?"
+          }
+        ],
+        "missing_requirement_ids": [],
+        "coverage_method": "exact quotes plus separate same-model sufficiency review; not a correctness guarantee",
+        "evidence": [
+          {
+            "chunk_id": "57686980c3ac2ad7d32d9b8d",
+            "score": 0.6914803,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+            "section": "Deployments > Updating a Deployment",
+            "source_id": 3,
+            "evidence_id": 1,
+            "requirement_id": 1,
+            "quote": "A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, `.spec.template`)\nis changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.",
+            "span_start": 12,
+            "span_end": 280
+          },
+          {
+            "chunk_id": "a9bfb1748c033fbd2598b966",
+            "score": 0.694788,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/management/",
+            "source_path": "content/en/docs/concepts/workloads/management.md",
+            "section": "Managing Workloads > Updating your application without an outage",
+            "source_id": 2,
+            "evidence_id": 2,
+            "requirement_id": 2,
+            "quote": "You can run multiple copies of your app, and use a *rollout* to gradually shift the traffic to\nnew healthy Pods. Eventually, all the running Pods would have the new software.",
+            "span_start": 225,
+            "span_end": 399
+          }
+        ],
+        "evidence_reviews": [
+          {
+            "answer": "Existing Pods read ConfigMap settings at startup and do not automatically update when the ConfigMap changes [1].",
+            "requirement_id": 1,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "The source explains that a Deployment's rollout is triggered by changes to the Pod template, not by changes to the ConfigMap. This implies that running Pods do not automatically update their ConfigMap settings.",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              1
+            ]
+          },
+          {
+            "answer": "Используйте rollout update для обновления всех реплик без изменения образа контейнера.",
+            "requirement_id": 2,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "Использование rollout update позволяет постепенно обновлять все реплики без изменения образа контейнера, что соответствует правилам управления работойloads [1].",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              2
+            ]
+          }
+        ],
+        "max_hops": 3,
+        "hops": [
+          {
+            "query": "Deployment передаёт настройки из ConfigMap через env. Я изменил ConfigMap и увеличил replicas. Почему уже работающие Pod продолжают использовать старые значения? Как обновить все реплики управляемым rollout без изменения образа контейнера?",
+            "target_requirement_id": 1,
+            "chunk_ids": [
+              "98b614df323d31bc5217989d",
+              "a9bfb1748c033fbd2598b966",
+              "57686980c3ac2ad7d32d9b8d",
+              "eb8be9dc21277ac5fdb1c021"
+            ],
+            "new_chunks": 4,
+            "usage": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 2050,
+                  "eval_count": 195,
+                  "total_duration": 54589691708
+                }
+              ]
+            },
+            "evidence": [
+              {
+                "chunk_id": "57686980c3ac2ad7d32d9b8d",
+                "score": 0.6914803,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+                "source_path": "content/en/docs/concepts/workloads/controllers/deployment.md",
+                "section": "Deployments > Updating a Deployment",
+                "source_id": 3,
+                "evidence_id": 1,
+                "requirement_id": 1,
+                "quote": "A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, `.spec.template`)\nis changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.",
+                "span_start": 12,
+                "span_end": 280
+              },
+              {
+                "chunk_id": "a9bfb1748c033fbd2598b966",
+                "score": 0.694788,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/management/",
+                "source_path": "content/en/docs/concepts/workloads/management.md",
+                "section": "Managing Workloads > Updating your application without an outage",
+                "source_id": 2,
+                "evidence_id": 2,
+                "requirement_id": 2,
+                "quote": "You can run multiple copies of your app, and use a *rollout* to gradually shift the traffic to\nnew healthy Pods. Eventually, all the running Pods would have the new software.",
+                "span_start": 225,
+                "span_end": 399
+              }
+            ],
+            "rejected_evidence": [],
+            "context_chunk_ids": [
+              "98b614df323d31bc5217989d",
+              "a9bfb1748c033fbd2598b966",
+              "57686980c3ac2ad7d32d9b8d",
+              "eb8be9dc21277ac5fdb1c021"
+            ],
+            "next_query": "How to update all replicas with a managed rollout without changing the container image for a Deployment?",
+            "reviews": [
+              {
+                "answer": "Existing Pods read ConfigMap settings at startup and do not automatically update when the ConfigMap changes [1].",
+                "requirement_id": 1,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "The source explains that a Deployment's rollout is triggered by changes to the Pod template, not by changes to the ConfigMap. This implies that running Pods do not automatically update their ConfigMap settings.",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  1
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1035,
+                      "eval_count": 104,
+                      "total_duration": 18424581584
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  1
+                ]
+              },
+              {
+                "answer": "Используйте rollout update для обновления всех реплик без изменения образа контейнера.",
+                "requirement_id": 2,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "Использование rollout update позволяет постепенно обновлять все реплики без изменения образа контейнера, что соответствует правилам управления работойloads [1].",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  2
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1034,
+                      "eval_count": 94,
+                      "total_duration": 15307180958
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  2
+                ]
+              }
+            ],
+            "missing_requirement_ids": []
+          }
+        ],
+        "stop_reason": "requirements_covered",
+        "retrieved_chunks": 4,
+        "context_chunks": 2,
+        "context_chunk_ids": [
+          "57686980c3ac2ad7d32d9b8d",
+          "a9bfb1748c033fbd2598b966"
+        ],
+        "retrieval_seconds": 4.315874874999281,
+        "total_seconds": 121.31588399998145,
+        "usage": {
+          "planning": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 296,
+                "eval_count": 99,
+                "total_duration": 13119725500
+              }
+            ]
+          },
+          "answer": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 637,
+                "eval_count": 71,
+                "total_duration": 14771314583
+              }
+            ]
+          }
+        }
+      }
+    },
+    "original_run": "20261029T230048Z_tuned_prompts_final"
+  },
+  {
+    "case": "service",
+    "top_k": 3,
+    "result": {
+      "question": "В Service указаны port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+      "answer": "Клиент обращается на порт 80, трафик попадает на порт 9376 в Pod.\n\nИсточники: [1] [2]",
+      "citations": [
+        {
+          "id": 1,
+          "chunk_id": "d5e6c55112c4e6be7739d83c",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+          "source_path": "content/en/docs/concepts/services-networking/service.md",
+          "section": "Service > Defining a Service",
+          "page": null,
+          "snippet": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+          "score": 0.69816935
+        },
+        {
+          "id": 2,
+          "chunk_id": "d5e6c55112c4e6be7739d83c",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+          "source_path": "content/en/docs/concepts/services-networking/service.md",
+          "section": "Service > Defining a Service",
+          "page": null,
+          "snippet": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+          "score": 0.69816935
+        }
+      ],
+      "insufficient_context": false,
+      "metadata": {
+        "architecture": "verified-evidence-multihop-v2",
+        "llm_model": "glm4:9b",
+        "generation": {
+          "context_window": 32768,
+          "max_tokens": 1024,
+          "temperature": 0,
+          "seed": 42,
+          "verify_answers": false,
+          "verify_evidence": true
+        },
+        "collection": "eval_config_4f81592daeca8af76b57",
+        "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+        "requirements": [
+          {
+            "id": 1,
+            "question": "На какой порт обращается клиент",
+            "query": "client port in Service with port 80 and targetPort 9376 Kubernetes documentation lookup 1-4 questions needed to answer the user."
+          },
+          {
+            "id": 2,
+            "question": "на какой порт Pod попадёт трафик?",
+            "query": "target port for traffic in Pod from Service with port 80 and targetPort 9376 Kubernetes documentation lookup 1-4 questions needed to answer the user."
+          }
+        ],
+        "missing_requirement_ids": [],
+        "coverage_method": "exact quotes plus separate same-model sufficiency review; not a correctness guarantee",
+        "evidence": [
+          {
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "score": 0.69816935,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "source_id": 2,
+            "evidence_id": 1,
+            "requirement_id": 1,
+            "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+            "span_start": 933,
+            "span_end": 1086
+          },
+          {
+            "chunk_id": "d5e6c55112c4e6be7739d83c",
+            "score": 0.69816935,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+            "source_path": "content/en/docs/concepts/services-networking/service.md",
+            "section": "Service > Defining a Service",
+            "source_id": 2,
+            "evidence_id": 2,
+            "requirement_id": 2,
+            "quote": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+            "span_start": 0,
+            "span_end": 311
+          }
+        ],
+        "evidence_reviews": [
+          {
+            "answer": "Клиент обращается на порт 80, а трафик попадает на порт 9376 в Pod [1]",
+            "requirement_id": 1,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "Согласно документации, Service может маппить входящий порт к targetPort. По умолчанию targetPort устанавливается в то же значение, что и порт. В данном случае порт 80 маппится на targetPort 9376 [1].",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              1
+            ]
+          },
+          {
+            "answer": "Трафик направляется на порт 9376 Pod.",
+            "requirement_id": 2,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "В документации указано, что Service направляет трафик на порт 9376 на любом Pod с меткой `app.kubernetes.io/name: MyApp` [1].",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              2
+            ]
+          }
+        ],
+        "max_hops": 3,
+        "hops": [
+          {
+            "query": "В Service указаны port: 80 и targetPort: 9376. На какой порт обращается клиент и на какой порт Pod попадёт трафик?",
+            "target_requirement_id": 1,
+            "chunk_ids": [
+              "689192d050492eb5b5b247ea",
+              "d5e6c55112c4e6be7739d83c",
+              "8a2dacb0aed58fd2edd559cf"
+            ],
+            "new_chunks": 3,
+            "usage": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 1160,
+                  "eval_count": 204,
+                  "total_duration": 42098336000
+                }
+              ]
+            },
+            "evidence": [
+              {
+                "chunk_id": "d5e6c55112c4e6be7739d83c",
+                "score": 0.69816935,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                "source_path": "content/en/docs/concepts/services-networking/service.md",
+                "section": "Service > Defining a Service",
+                "source_id": 2,
+                "evidence_id": 1,
+                "requirement_id": 1,
+                "quote": "A Service can map *any* incoming `port` to a `targetPort`. By default and\nfor convenience, the `targetPort` is set to the same value as the `port`\nfield.",
+                "span_start": 933,
+                "span_end": 1086
+              },
+              {
+                "chunk_id": "d5e6c55112c4e6be7739d83c",
+                "score": 0.69816935,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/",
+                "source_path": "content/en/docs/concepts/services-networking/service.md",
+                "section": "Service > Defining a Service",
+                "source_id": 2,
+                "evidence_id": 2,
+                "requirement_id": 2,
+                "quote": "\nApplying this manifest creates a new Service named \"my-service\" with the default\nClusterIP [service type](https://v1-35.docs.kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). The Service\ntargets TCP port 9376 on any Pod with the `app.kubernetes.io/name: MyApp` label.",
+                "span_start": 0,
+                "span_end": 311
+              }
+            ],
+            "rejected_evidence": [],
+            "context_chunk_ids": [
+              "689192d050492eb5b5b247ea",
+              "d5e6c55112c4e6be7739d83c",
+              "8a2dacb0aed58fd2edd559cf"
+            ],
+            "next_query": "How does the client port and target port mapping work in Kubernetes for a Service with port 80 and targetPort 9376?",
+            "reviews": [
+              {
+                "answer": "Клиент обращается на порт 80, а трафик попадает на порт 9376 в Pod [1]",
+                "requirement_id": 1,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "Согласно документации, Service может маппить входящий порт к targetPort. По умолчанию targetPort устанавливается в то же значение, что и порт. В данном случае порт 80 маппится на targetPort 9376 [1].",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  1
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1007,
+                      "eval_count": 128,
+                      "total_duration": 19789018916
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  1
+                ]
+              },
+              {
+                "answer": "Трафик направляется на порт 9376 Pod.",
+                "requirement_id": 2,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "В документации указано, что Service направляет трафик на порт 9376 на любом Pod с меткой `app.kubernetes.io/name: MyApp` [1].",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  2
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1048,
+                      "eval_count": 93,
+                      "total_duration": 15819173875
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  2
+                ]
+              }
+            ],
+            "missing_requirement_ids": []
+          }
+        ],
+        "stop_reason": "requirements_covered",
+        "retrieved_chunks": 3,
+        "context_chunks": 2,
+        "context_chunk_ids": [
+          "d5e6c55112c4e6be7739d83c",
+          "d5e6c55112c4e6be7739d83c"
+        ],
+        "retrieval_seconds": 0.1888657920062542,
+        "total_seconds": 107.32646537502296,
+        "usage": {
+          "planning": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 262,
+                "eval_count": 147,
+                "total_duration": 18501954209
+              }
+            ]
+          },
+          "answer": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 657,
+                "eval_count": 39,
+                "total_duration": 10850098875
+              }
+            ]
+          }
+        }
+      }
+    },
+    "original_run": "20261029T230048Z_tuned_prompts_final"
+  },
+  {
+    "case": "statefulset_pvc",
+    "top_k": 2,
+    "result": {
+      "question": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PersistentVolume стоит reclaimPolicy: Delete. CSI-драйвер поддерживает удаление. Удалятся ли данные при удалении StatefulSet? А если после этого вручную удалить оставшийся PVC?",
+      "answer": "Удалятся ли данные при удалении StatefulSet? Да, данные удалятся, так как у PersistentVolume стоит reclaimPolicy: Delete, и CSI-драйвер поддерживает удаление. А если после этого вручную удалить оставшийся PVC? Данные также удалятся, так как не задана persistentVolumeClaimRetentionPolicy и reclaimPolicy: Delete.\n\nИсточники: [1] [2]",
+      "citations": [
+        {
+          "id": 1,
+          "chunk_id": "05c929b1b9ea85ee852027cd",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "section": "StatefulSets > PersistentVolumeClaim retention",
+          "page": null,
+          "snippet": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:\n\n`whenDeleted`\n: Configures the volume retention behavior that applies when the StatefulSet is deleted.\n\n`whenScaled`\n: Configures the volume retention behavior that applies when the replica count of\nthe StatefulSet   is reduced; for example, when scaling down the set.\n\nFor each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.\n\nBear in mind that these policies **only** apply when Pods are being removed due to the\nStatefulSet being deleted or scaled down. For example, if a Pod associated with a StatefulSet\nfails due to node failure, and the control plane creates a replacement Pod, the StatefulSet\nretains the existing PVC.  The existing volume is unaffected, and the cluster will attach it to\nthe node where the new Pod is about to launch.\n\nThe default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+          "score": 0.86775553
+        },
+        {
+          "id": 2,
+          "chunk_id": "05c929b1b9ea85ee852027cd",
+          "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+          "section": "StatefulSets > PersistentVolumeClaim retention",
+          "page": null,
+          "snippet": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.",
+          "score": 0.86775553
+        }
+      ],
+      "insufficient_context": false,
+      "metadata": {
+        "architecture": "verified-evidence-multihop-v2",
+        "llm_model": "glm4:9b",
+        "generation": {
+          "context_window": 32768,
+          "max_tokens": 1024,
+          "temperature": 0,
+          "seed": 42,
+          "verify_answers": false,
+          "verify_evidence": true
+        },
+        "collection": "eval_config_4f81592daeca8af76b57",
+        "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+        "requirements": [
+          {
+            "id": 1,
+            "question": "Удалятся ли данные при удалении StatefulSet?",
+            "query": "StatefulSet deletion and persistentVolumeClaimRetentionPolicy behavior on deletion of StatefulSet without retention policy set and with PersistentVolume reclaimPolicy set to Delete and supported CSI driver for deletion support?"
+          },
+          {
+            "id": 2,
+            "question": "А если после этого вручную удалить оставшийся PVC?",
+            "query": "What happens to the data if a PersistentVolumeClaim (PVC) is manually deleted after the StatefulSet is deleted and without a persistentVolumeClaimRetentionPolicy set?"
+          }
+        ],
+        "missing_requirement_ids": [],
+        "coverage_method": "exact quotes plus separate same-model sufficiency review; not a correctness guarantee",
+        "evidence": [
+          {
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "score": 0.86775553,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "source_id": 1,
+            "evidence_id": 1,
+            "requirement_id": 1,
+            "quote": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:\n\n`whenDeleted`\n: Configures the volume retention behavior that applies when the StatefulSet is deleted.\n\n`whenScaled`\n: Configures the volume retention behavior that applies when the replica count of\nthe StatefulSet   is reduced; for example, when scaling down the set.\n\nFor each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.\n\nBear in mind that these policies **only** apply when Pods are being removed due to the\nStatefulSet being deleted or scaled down. For example, if a Pod associated with a StatefulSet\nfails due to node failure, and the control plane creates a replacement Pod, the StatefulSet\nretains the existing PVC.  The existing volume is unaffected, and the cluster will attach it to\nthe node where the new Pod is about to launch.\n\nThe default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+            "span_start": 21,
+            "span_end": 1860
+          },
+          {
+            "chunk_id": "05c929b1b9ea85ee852027cd",
+            "score": 0.86775553,
+            "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+            "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+            "section": "StatefulSets > PersistentVolumeClaim retention",
+            "source_id": 1,
+            "evidence_id": 2,
+            "requirement_id": 2,
+            "quote": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.",
+            "span_start": 728,
+            "span_end": 1345
+          }
+        ],
+        "evidence_reviews": [
+          {
+            "answer": "No, the data will not be deleted when the StatefulSet is deleted [1].",
+            "requirement_id": 1,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "The StatefulSet does not have a persistentVolumeClaimRetentionPolicy set, and the default policy is `Retain`, which means the data will not be deleted when the StatefulSet is deleted.",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              1
+            ]
+          },
+          {
+            "answer": "No, the data will not be deleted manually deleting the remaining PVC [1].",
+            "requirement_id": 2,
+            "status": "supported",
+            "source_ids": [
+              1
+            ],
+            "reason": "The source explains that without a persistentVolumeClaimRetentionPolicy set, PVCs are not affected when their Pod is deleted, implying that manual deletion of a PVC does not delete the data.",
+            "missing_information": null,
+            "next_query": null,
+            "evidence_ids": [
+              2
+            ]
+          }
+        ],
+        "max_hops": 3,
+        "hops": [
+          {
+            "query": "У StatefulSet не задана persistentVolumeClaimRetentionPolicy, а у его PersistentVolume стоит reclaimPolicy: Delete. CSI-драйвер поддерживает удаление. Удалятся ли данные при удалении StatefulSet? А если после этого вручную удалить оставшийся PVC?",
+            "target_requirement_id": 1,
+            "chunk_ids": [
+              "05c929b1b9ea85ee852027cd",
+              "3e44a57e4fc71d46aaf10ba2"
+            ],
+            "new_chunks": 2,
+            "usage": {
+              "attempts": 1,
+              "calls": [
+                {
+                  "model": "glm4:9b",
+                  "prompt_eval_count": 1093,
+                  "eval_count": 324,
+                  "total_duration": 44051193625
+                }
+              ]
+            },
+            "evidence": [
+              {
+                "chunk_id": "05c929b1b9ea85ee852027cd",
+                "score": 0.86775553,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                "section": "StatefulSets > PersistentVolumeClaim retention",
+                "source_id": 1,
+                "evidence_id": 1,
+                "requirement_id": 1,
+                "quote": "The optional `.spec.persistentVolumeClaimRetentionPolicy` field controls if\nand how PVCs are deleted during the lifecycle of a StatefulSet. You must enable the\n`StatefulSetAutoDeletePVC` [feature gate](https://v1-35.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/)\non the API server and the controller manager to use this field.\nOnce enabled, there are two policies you can configure for each StatefulSet:\n\n`whenDeleted`\n: Configures the volume retention behavior that applies when the StatefulSet is deleted.\n\n`whenScaled`\n: Configures the volume retention behavior that applies when the replica count of\nthe StatefulSet   is reduced; for example, when scaling down the set.\n\nFor each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.\n\nBear in mind that these policies **only** apply when Pods are being removed due to the\nStatefulSet being deleted or scaled down. For example, if a Pod associated with a StatefulSet\nfails due to node failure, and the control plane creates a replacement Pod, the StatefulSet\nretains the existing PVC.  The existing volume is unaffected, and the cluster will attach it to\nthe node where the new Pod is about to launch.\n\nThe default for policies is `Retain`, matching the StatefulSet behavior before this new feature.",
+                "span_start": 21,
+                "span_end": 1860
+              },
+              {
+                "chunk_id": "05c929b1b9ea85ee852027cd",
+                "score": 0.86775553,
+                "source_url": "https://v1-35.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+                "source_path": "content/en/docs/concepts/workloads/controllers/statefulset.md",
+                "section": "StatefulSets > PersistentVolumeClaim retention",
+                "source_id": 1,
+                "evidence_id": 2,
+                "requirement_id": 2,
+                "quote": "For each policy that you can configure, you can set the value to either `Delete` or `Retain`.\n\n`Delete`\n: The PVCs created from the StatefulSet `volumeClaimTemplate` are deleted for each Pod\naffected by the policy. With the `whenDeleted` policy all PVCs from the\n`volumeClaimTemplate` are deleted after their Pods have been deleted. With the\n`whenScaled` policy, only PVCs corresponding to Pod replicas being scaled down are\ndeleted, after their Pods have been deleted.\n\n`Retain` (default)\n: PVCs from the `volumeClaimTemplate` are not affected when their Pod is\ndeleted. This is the behavior before this new feature.",
+                "span_start": 728,
+                "span_end": 1345
+              }
+            ],
+            "rejected_evidence": [],
+            "context_chunk_ids": [
+              "05c929b1b9ea85ee852027cd",
+              "3e44a57e4fc71d46aaf10ba2"
+            ],
+            "next_query": "What happens to the PersistentVolumeClaim (PVC) data when a StatefulSet is deleted without a retention policy and a PersistentVolume has a reclaimPolicy set to Delete?",
+            "reviews": [
+              {
+                "answer": "No, the data will not be deleted when the StatefulSet is deleted [1].",
+                "requirement_id": 1,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "The StatefulSet does not have a persistentVolumeClaimRetentionPolicy set, and the default policy is `Retain`, which means the data will not be deleted when the StatefulSet is deleted.",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  1
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1450,
+                      "eval_count": 102,
+                      "total_duration": 21908627125
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  1
+                ]
+              },
+              {
+                "answer": "No, the data will not be deleted manually deleting the remaining PVC [1].",
+                "requirement_id": 2,
+                "status": "supported",
+                "source_ids": [
+                  1
+                ],
+                "reason": "The source explains that without a persistentVolumeClaimRetentionPolicy set, PVCs are not affected when their Pod is deleted, implying that manual deletion of a PVC does not delete the data.",
+                "missing_information": null,
+                "next_query": null,
+                "evidence_ids": [
+                  2
+                ],
+                "usage": {
+                  "attempts": 1,
+                  "calls": [
+                    {
+                      "model": "glm4:9b",
+                      "prompt_eval_count": 1161,
+                      "eval_count": 97,
+                      "total_duration": 18893061209
+                    }
+                  ]
+                },
+                "reviewed_evidence_ids": [
+                  2
+                ]
+              }
+            ],
+            "missing_requirement_ids": []
+          }
+        ],
+        "stop_reason": "requirements_covered",
+        "retrieved_chunks": 2,
+        "context_chunks": 2,
+        "context_chunk_ids": [
+          "05c929b1b9ea85ee852027cd",
+          "05c929b1b9ea85ee852027cd"
+        ],
+        "retrieval_seconds": 4.6782641659956425,
+        "total_seconds": 136.07661629095674,
+        "usage": {
+          "planning": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 299,
+                "eval_count": 137,
+                "total_duration": 16846518125
+              }
+            ]
+          },
+          "answer": {
+            "attempts": 1,
+            "calls": [
+              {
+                "model": "glm4:9b",
+                "prompt_eval_count": 1176,
+                "eval_count": 96,
+                "total_duration": 29001865834
+              }
+            ]
+          }
+        }
+      }
+    },
+    "original_run": "20261029T230634Z_retention_context"
+  }
+]

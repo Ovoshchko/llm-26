@@ -1,0 +1,34 @@
+{
+  "threshold": 0.5,
+  "model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_version": "72ae1550489b20f9bff342e255935e3e6a1fa76315c937f701dc64e4d65e6d9d",
+  "source_run": "retrieval/embedding_dimensions/results.json",
+  "source_run_sha256": "926e20d115104c1c8b3dd504862cf152bac7570dca3fec6f23793dd1605d3ca0",
+  "labels_sha256": "170f7cea80874874d1efccf72edd3eea3e0886731a27f896061daac9d0dde8aa",
+  "baseline": {
+    "recall@5": 0.735,
+    "precision@5": 0.25,
+    "mrr@5": 0.7891666666666667,
+    "evidence_coverage@5": 0.7708333333333333,
+    "complete_evidence@5": 0.5,
+    "recall@10": 0.8300000000000001,
+    "precision@10": 0.15,
+    "mrr@10": 0.7891666666666667,
+    "evidence_coverage@10": 0.8691666666666666,
+    "complete_evidence@10": 0.7
+  },
+  "with_threshold": {
+    "recall@5": 0.735,
+    "precision@5": 0.25,
+    "mrr@5": 0.7891666666666667,
+    "evidence_coverage@5": 0.7708333333333333,
+    "complete_evidence@5": 0.5,
+    "recall@10": 0.8300000000000001,
+    "precision@10": 0.15,
+    "mrr@10": 0.7891666666666667,
+    "evidence_coverage@10": 0.8691666666666666,
+    "complete_evidence@10": 0.7
+  },
+  "metrics_unchanged": true,
+  "scope": "Heuristic for current model/corpus; 20 development questions, not calibrated confidence probabilities"
+}
