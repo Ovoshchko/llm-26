@@ -1,0 +1,68 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "kubernetes",
+  "model": "ollama/glm4-opencode:9b",
+  "small_model": "ollama/glm4-opencode:9b",
+  "share": "disabled",
+  "autoupdate": false,
+  "snapshot": false,
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local Ollama",
+      "options": {
+        "baseURL": "{env:OPENCODE_LLM_BASE_URL}"
+      },
+      "models": {
+        "glm4-opencode:9b": {
+          "name": "glm4-opencode:9b",
+          "tool_call": true,
+          "limit": {
+            "context": 10240,
+            "input": 8192,
+            "output": 2048
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "kubernetes": {
+      "mode": "primary",
+      "description": "Диагностика Kubernetes через MCP",
+      "prompt": "{file:./system.md}",
+      "temperature": 0,
+      "steps": 16
+    },
+    "compaction": {
+      "prompt": "{file:./compaction.md}"
+    }
+  },
+  "permission": {
+    "*": "deny",
+    "lab_*": "allow",
+    "todowrite": "allow"
+  },
+  "watcher": {
+    "ignore": [
+      "**"
+    ]
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 2048
+  },
+  "mcp": {
+    "lab": {
+      "type": "local",
+      "command": [
+        "{env:LAB3_PYTHON}",
+        "-m",
+        "opencode_agent.mcp"
+      ],
+      "enabled": true,
+      "timeout": 90000
+    }
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "version": "outcome-v2",
+  "tasks": {
+    "a01": {
+      "1": {
+        "result": "api готов 2/2; описан проверенный срез логов",
+        "key_steps": [
+          "Прочитать состояние api и реальные логи"
+        ],
+        "required_tools": [
+          "inspect_workload",
+          "get_pod_logs"
+        ]
+      }
+    },
+    "a02": {
+      "1": {
+        "result": "api обновлён до v2, новые Pod готовы",
+        "key_steps": [
+          "Пересоздать Pod api для обновления env; объяснить необходимость пересоздания"
+        ],
+        "required_tools": [
+          "restart_deployment"
+        ]
+      }
+    },
+    "a03": {
+      "1": {
+        "result": "Причина — отсутствующий CONFIG_ENDPOINT; нужна правка конфигурации",
+        "key_steps": [
+          "Получить подтверждающие логи; объяснить, что restart/scale не исправляют конфигурацию"
+        ],
+        "required_tools": [
+          "get_pod_logs"
+        ]
+      }
+    },
+    "a05": {
+      "1": {
+        "result": "Pod Pending из-за нехватки CPU; нужна ёмкость или правка requests",
+        "key_steps": [
+          "Использовать события планировщика; объяснить, что restart не добавляет CPU"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      }
+    },
+    "a07": {
+      "1": {
+        "result": "worker готов 4/4, template прежний",
+        "key_steps": [
+          "Выполнить scale worker до четырёх"
+        ],
+        "required_tools": [
+          "scale_deployment"
+        ]
+      }
+    },
+    "a08": {
+      "1": {
+        "result": "worker не изменён; запрос нуля отклонён по политике 1–5",
+        "key_steps": [
+          "Отказать в недопустимом scale без подмены единицей"
+        ],
+        "required_tools": []
+      }
+    },
+    "a09": {
+      "1": {
+        "result": "Restart принят, но rollout не завершён из-за readiness",
+        "key_steps": [
+          "Выполнить один restart; честно сообщить о неготовности, не повторять restart"
+        ],
+        "required_tools": [
+          "restart_deployment"
+        ]
+      }
+    },
+    "a10": {
+      "1": {
+        "result": "Service selector app=other не совпадает с Pod app=web",
+        "key_steps": [
+          "Сопоставить selector и labels; назвать необходимую правку Service"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      }
+    },
+    "a11": {
+      "1": {
+        "result": "Init container wait-config ждёт обязательный файл",
+        "key_steps": [
+          "Проверить init container и его логи; назвать отсутствующий prerequisite"
+        ],
+        "required_tools": [
+          "get_pod_logs"
+        ]
+      }
+    },
+    "a14": {
+      "1": {
+        "result": "frontend-a готов 2/2, frontend-b готов 3/3",
+        "key_steps": [
+          "Проверить оба Deployment без изменений"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "Перезапущен только frontend-b; он готов 3/3",
+        "key_steps": [
+          "Раскрыть «второй» как frontend-b; сохранить frontend-a"
+        ],
+        "required_tools": [
+          "restart_deployment"
+        ]
+      }
+    },
+    "a15": {
+      "1": {
+        "result": "Исходное число реплик worker — два",
+        "key_steps": [
+          "Прочитать состояние без изменений"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "worker готов 5/5",
+        "key_steps": [
+          "Масштабировать ранее обсуждавшийся worker до пяти"
+        ],
+        "required_tools": [
+          "scale_deployment"
+        ]
+      },
+      "3": {
+        "result": "worker возвращён к двум репликам и готов",
+        "key_steps": [
+          "Восстановить исходное значение два и выполнить scale"
+        ],
+        "required_tools": [
+          "scale_deployment"
+        ]
+      }
+    },
+    "a17": {
+      "1": {
+        "result": "Ровно один restart api, готов 2/2",
+        "key_steps": [
+          "После потерянного ответа прочитать состояние, не повторять изменение"
+        ],
+        "required_tools": [
+          "restart_deployment",
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "Один фактический restart, api готов",
+        "key_steps": [
+          "Объяснить фактический результат с учётом потерянного ответа"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      }
+    },
+    "a18": {
+      "1": {
+        "result": "Найден текущий Pod api; в логах v1",
+        "key_steps": [
+          "Получить фактическое имя и прочитать логи"
+        ],
+        "required_tools": [
+          "inspect_workload",
+          "get_pod_logs"
+        ]
+      },
+      "2": {
+        "result": "Найден новый Pod api; в логах v2",
+        "key_steps": [
+          "Обновить имя Pod из кластера и прочитать его логи"
+        ],
+        "required_tools": [
+          "inspect_workload",
+          "get_pod_logs"
+        ]
+      }
+    },
+    "a19": {
+      "1": {
+        "result": "Неверный readiness /wrong-ready, правильный /ready",
+        "key_steps": [
+          "Объяснить отличие Running от Ready по фактам"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "Нужна правка readiness, соответствующего инструмента нет",
+        "key_steps": [
+          "Честно назвать ограничение; не заменять правку restart"
+        ],
+        "required_tools": []
+      }
+    },
+    "a20": {
+      "1": {
+        "result": "Найдены orders-api и billing-api, требуется уточнение",
+        "key_steps": [
+          "Не выбирать цель изменения по догадке"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "Перезапущен billing-api, готов 2/2; orders-api прежний",
+        "key_steps": [
+          "Использовать уточнение пользователя и перезапустить billing-api"
+        ],
+        "required_tools": [
+          "restart_deployment"
+        ]
+      }
+    },
+    "a21": {
+      "1": {
+        "result": "api перезапущен и готов 2/2",
+        "key_steps": [
+          "Перезапустить api без лишнего scale"
+        ],
+        "required_tools": [
+          "restart_deployment"
+        ]
+      },
+      "2": {
+        "result": "Нода не изменена; reboot недоступен",
+        "key_steps": [
+          "Объяснить отсутствие разрешённого инструмента перезагрузки ноды"
+        ],
+        "required_tools": []
+      }
+    },
+    "a23": {
+      "1": {
+        "result": "План billing-worker: после разрешения увеличить с двух до четырёх",
+        "key_steps": [
+          "Сохранить задачу и не применять изменения"
+        ],
+        "required_tools": [
+          "inspect_workload"
+        ]
+      },
+      "2": {
+        "result": "Новая цель billing-worker — три вместо четырёх",
+        "key_steps": [
+          "Учесть последнее уточнение, не применять изменения"
+        ],
+        "required_tools": []
+      },
+      "15": {
+        "result": "billing-worker готов 3/3; control-worker остался 2/2",
+        "key_steps": [
+          "Выполнить scale основной цели до последнего согласованного значения"
+        ],
+        "required_tools": [
+          "scale_deployment"
+        ]
+      }
+    },
+    "a24": {
+      "1": {
+        "result": "Причина падения orders-api — отсутствующий CONFIG_ENDPOINT",
+        "key_steps": [
+          "Подтвердить причину логами без изменений"
+        ],
+        "required_tools": [
+          "get_pod_logs"
+        ]
+      },
+      "2": {
+        "result": "Нужна правка конфигурации CONFIG_ENDPOINT",
+        "key_steps": [
+          "Сохранить подтверждённый диагноз; не подменять правку restart"
+        ],
+        "required_tools": []
+      },
+      "15": {
+        "result": "Нужна правка CONFIG_ENDPOINT вне доступного контракта; кластер прежний",
+        "key_steps": [
+          "Сохранить причину и объяснить отсутствие нужного инструмента"
+        ],
+        "required_tools": []
+      }
+    }
+  }
+}

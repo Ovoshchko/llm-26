@@ -1,0 +1,11 @@
+{
+  "search_docs": "Найти фрагменты документации Kubernetes через retrieval из lab2.",
+  "resources_get": "Прочитать один ресурс Kubernetes: apiVersion, kind, name, namespace=agent-lab. Для Deployment apiVersion=apps/v1, kind=Deployment. Начинай проверку приложения с этого инструмента.",
+  "resources_list": "Получить список ресурсов одного kind в namespace=agent-lab. Используй apiVersion и kind, например v1 Service или apps/v1 Deployment.",
+  "pods_list_in_namespace": "Найти поды в namespace=agent-lab. По возможности укажи labelSelector из spec.selector Deployment и limit=10.",
+  "pods_log": "Прочитать логи пода: name, namespace=agent-lab, container при необходимости. Укажи tail=30. previous=true для предыдущего завершённого контейнера.",
+  "events_list": "Прочитать события Kubernetes в namespace=agent-lab для диагностики ошибок. Старые события не означают текущую неисправность.",
+  "restart_deployment": "Инициировать управляемый перезапуск указанного Deployment в agent-lab; результат требует проверки.",
+  "scale_deployment": "Изменить число реплик указанного Deployment в agent-lab в диапазоне от 1 до 5.",
+  "rollout_status": "Проверить текущее завершение rollout и готовность реплик. complete=false означает, что операция ещё не завершена; при необходимости проверь повторно."
+}

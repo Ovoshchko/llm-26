@@ -1,0 +1,12 @@
+kubeconfig = "data/cluster/agent-kubeconfig.yaml"
+read_only = false
+toolsets = ["core"]
+enabled_tools = ["resources_get", "resources_list", "pods_list_in_namespace", "pods_log", "events_list", "resources_scale", "resources_create_or_update"]
+list_output = "table"
+max_backend_response_bytes = 65536
+max_result_bytes = 32768
+
+[[denied_resources]]
+group = ""
+version = "v1"
+kind = "Secret"

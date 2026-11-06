@@ -1,0 +1,75 @@
+{
+  "dataset_sha256": "8c5a266356ed740e6caa2f35bc5abd8b551ea712657f703dbe38f801fee72f42",
+  "dataset_size": 18,
+  "tasks": [
+    "a01",
+    "a02",
+    "a03",
+    "a05",
+    "a07",
+    "a08",
+    "a09",
+    "a10",
+    "a11",
+    "a14",
+    "a15",
+    "a17",
+    "a18",
+    "a19",
+    "a20",
+    "a21",
+    "a23",
+    "a24"
+  ],
+  "agents": [
+    "own",
+    "opencode"
+  ],
+  "embedding_manifest": {
+    "schema_version": 1,
+    "version": "ced08184c9da080335d773371c90194fef49a716d740cafe303e3029dfdfb3c7",
+    "identity": {
+      "schema": "dense-embeddings-v2",
+      "embedding": {
+        "model": "Qwen/Qwen3-Embedding-0.6B",
+        "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+        "max_length": 2048,
+        "dimensions": null,
+        "document_prefix": "",
+        "query_prefix": "Instruct: Retrieve Kubernetes documentation passages relevant to the question.\nQuery: "
+      },
+      "normalized": true,
+      "dtype": "float32",
+      "chunks_sha256": "031b35c326d1745a91bb0f234ed683cb0442ca9b177d809499db0ed0ffc2e7cb",
+      "chunk_manifest_sha256": "511560e55081e43548ea5e0af7c8c28bc0b628fb969b042d00f129690d5cc8ff"
+    },
+    "dimension": 1024,
+    "count": 2950,
+    "chunking": {
+      "chunk_size": 800,
+      "overlap": 100,
+      "include_headings": false,
+      "splitter": "markdown"
+    },
+    "files": {
+      "vectors.npy": "a3f456045148260b66422de439ef8833d8ace073a6e951257e5e09bb632eff58",
+      "chunks.jsonl": "031b35c326d1745a91bb0f234ed683cb0442ca9b177d809499db0ed0ffc2e7cb"
+    }
+  },
+  "fixture_image": "agent-lab/evaluation:dev",
+  "input_budget": 8192,
+  "model_window": 32768,
+  "output_budget": 2048,
+  "max_steps": 16,
+  "timeout_seconds": 600,
+  "evaluation_policy": "outcome-v2",
+  "context_strategy": "extractive-v2",
+  "opencode_structured_tools": true,
+  "opencode_transport": "persistent-http",
+  "criteria_sha256": "2676631ce1699befeff0e36b8facf7de42f3399223bf1d91053778d7e64a00ee",
+  "opencode_prompt_sha256": "5b34e84052f5bb620b8f1b3f21aa7560fcaf3231e026b1cacbbe9ed1a80b7e24",
+  "opencode_additional_prompts": {
+    "compaction.md": "db4a98eeba044b1f5c35f478c19d69d68335ed769a6385d16ce98ae48829a5cc",
+    "reply.md": "ea3d9ee0e8fc624a26e089c6e7dc29853153f33fe69f84450407b8e17b86c15b"
+  }
+}

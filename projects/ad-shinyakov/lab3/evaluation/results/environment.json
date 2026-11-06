@@ -1,0 +1,160 @@
+{
+  "architecture": "arm64",
+  "python": "3.12.11",
+  "packages": {
+    "langgraph": "1.2.19",
+    "langgraph-checkpoint-sqlite": "3.1.3",
+    "langchain-core": "1.7.6",
+    "langchain-ollama": "1.1.0",
+    "langfuse": "4.18.0",
+    "fastmcp": "4.1.6",
+    "transformers": "4.57.6",
+    "sentence-transformers": "5.7.0",
+    "qdrant-client": "1.19.1",
+    "jinja2": "3.1.6",
+    "numpy": "2.5.3",
+    "matplotlib": "3.11.2"
+  },
+  "agents": {
+    "own": {
+      "max_steps": 16,
+      "timeout_seconds": 600,
+      "context_limit_tokens": 8192,
+      "model_context_window": 32768,
+      "max_output_tokens": 2048,
+      "model": "glm4-agent:9b",
+      "ollama_url": "http://localhost:11434"
+    },
+    "opencode": {
+      "model": "glm4-opencode:9b",
+      "timeout_seconds": 600,
+      "max_steps": 16,
+      "structured_tools": true,
+      "limits": {
+        "context": 10240,
+        "input": 8192,
+        "output": 2048
+      },
+      "compaction": {
+        "auto": true,
+        "prune": true,
+        "reserved": 2048
+      }
+    }
+  },
+  "models": {
+    "glm4-agent:9b": {
+      "weights_sha256": "b506a070d1152798d435ec4e7687336567ae653b3106f73b7b4ac7be1cbc4449",
+      "template": "[gMASK]<sop>{{ if .Tools }}<|system|>\n\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b:\n{{ json .Tools }}\n\u0427\u0442\u043e\u0431\u044b \u0432\u044b\u0437\u0432\u0430\u0442\u044c \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442, \u0432\u0435\u0440\u043d\u0438 \u0442\u043e\u043b\u044c\u043a\u043e JSON: {\"name\":\"\u0438\u043c\u044f_\u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430\",\"arguments\":{\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b}}.\n\u0412\u044b\u0437\u044b\u0432\u0430\u0439 \u0442\u043e\u043b\u044c\u043a\u043e \u043e\u0434\u0438\u043d \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442 \u0437\u0430 \u0440\u0430\u0437. \u041d\u0435 \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u0439 \u043f\u043e\u044f\u0441\u043d\u0435\u043d\u0438\u044f \u043a JSON \u0432\u044b\u0437\u043e\u0432\u0430.\n\u041d\u0435 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439 Markdown, \u0442\u0440\u043e\u0439\u043d\u044b\u0435 \u043e\u0431\u0440\u0430\u0442\u043d\u044b\u0435 \u043a\u0430\u0432\u044b\u0447\u043a\u0438 \u0438\u043b\u0438 \u0431\u043b\u043e\u043a\u0438 \u043a\u043e\u0434\u0430 \u0434\u043b\u044f \u0432\u044b\u0437\u043e\u0432\u0430.\n\u0412\u0441\u0435 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0435 arguments \u0438\u0437 \u0441\u0445\u0435\u043c\u044b \u0434\u043e\u043b\u0436\u043d\u044b \u043f\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u043e\u0432\u0430\u0442\u044c, \u0432\u043a\u043b\u044e\u0447\u0430\u044f name \u0440\u0435\u0441\u0443\u0440\u0441\u0430.\n\u041f\u0440\u0438\u043c\u0435\u0440: {\"name\":\"resources_get\",\"arguments\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"namespace\":\"agent-lab\",\"name\":\"\u0438\u043c\u044f_\u0438\u0437_\u0437\u0430\u043f\u0440\u043e\u0441\u0430\"}}.\n\u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u043f\u043e\u0441\u0442\u0443\u043f\u0438\u0442 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u044b\u043c \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435\u043c observation. \u041d\u0435 \u043f\u0440\u0438\u0434\u0443\u043c\u044b\u0432\u0430\u0439 \u0435\u0433\u043e.\n\u041a\u043e\u0433\u0434\u0430 \u0434\u0430\u043d\u043d\u044b\u0445 \u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e, \u0432\u0435\u0440\u043d\u0438 JSON {\"answer\":\"\u043e\u0442\u0432\u0435\u0442 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044e \u043d\u0430 \u0440\u0443\u0441\u0441\u043a\u043e\u043c\"}.\n{{ end }}{{ range .Messages }}{{ if eq .Role \"tool\" }}<|observation|>\n{{ .Content }}{{ else }}<|{{ .Role }}|>\n{{ if .ToolCalls }}{{ range .ToolCalls }}{\"name\":\"{{ .Function.Name }}\",\"arguments\":{{ json .Function.Arguments }}}{{ end }}{{ else }}{{ .Content }}{{ end }}{{ end }}{{ end }}<|assistant|>\n",
+      "parameters": "stop                           \"<|system|>\"\nstop                           \"<|user|>\"\nstop                           \"<|assistant|>\"\nstop                           \"<|observation|>\"\ntemperature                    0",
+      "details": {
+        "parent_model": "glm4:9b",
+        "format": "gguf",
+        "family": "chatglm",
+        "families": [
+          "chatglm"
+        ],
+        "parameter_size": "9.4B",
+        "quantization_level": "Q4_0",
+        "runner": "llamacpp"
+      }
+    },
+    "glm4-opencode:9b": {
+      "weights_sha256": "b506a070d1152798d435ec4e7687336567ae653b3106f73b7b4ac7be1cbc4449",
+      "template": "[gMASK]<sop>{{ if .Tools }}<|system|>\n\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b:\n{{ json .Tools }}\n\u0427\u0442\u043e\u0431\u044b \u0432\u044b\u0437\u0432\u0430\u0442\u044c \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442, \u0432\u0435\u0440\u043d\u0438 \u0442\u043e\u043b\u044c\u043a\u043e JSON: {\"name\":\"\u0438\u043c\u044f_\u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430\",\"arguments\":{\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b}}.\n\u0412\u044b\u0437\u044b\u0432\u0430\u0439 \u0442\u043e\u043b\u044c\u043a\u043e \u043e\u0434\u0438\u043d \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442 \u0437\u0430 \u0440\u0430\u0437. \u041d\u0435 \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u0439 \u043f\u043e\u044f\u0441\u043d\u0435\u043d\u0438\u044f \u043a JSON \u0432\u044b\u0437\u043e\u0432\u0430.\n\u041d\u0435 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439 Markdown, \u0442\u0440\u043e\u0439\u043d\u044b\u0435 \u043e\u0431\u0440\u0430\u0442\u043d\u044b\u0435 \u043a\u0430\u0432\u044b\u0447\u043a\u0438 \u0438\u043b\u0438 \u0431\u043b\u043e\u043a\u0438 \u043a\u043e\u0434\u0430 \u0434\u043b\u044f \u0432\u044b\u0437\u043e\u0432\u0430.\n\u0412\u0441\u0435 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0435 arguments \u0438\u0437 \u0441\u0445\u0435\u043c\u044b \u0434\u043e\u043b\u0436\u043d\u044b \u043f\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u043e\u0432\u0430\u0442\u044c, \u0432\u043a\u043b\u044e\u0447\u0430\u044f name \u0440\u0435\u0441\u0443\u0440\u0441\u0430.\n\u041f\u0440\u0438\u043c\u0435\u0440: {\"name\":\"lab_resources_get\",\"arguments\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"namespace\":\"agent-lab\",\"name\":\"\u0438\u043c\u044f_\u0438\u0437_\u0437\u0430\u043f\u0440\u043e\u0441\u0430\"}}.\n\u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u043f\u043e\u0441\u0442\u0443\u043f\u0438\u0442 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u044b\u043c \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435\u043c observation. \u041d\u0435 \u043f\u0440\u0438\u0434\u0443\u043c\u044b\u0432\u0430\u0439 \u0435\u0433\u043e.\n\u041a\u043e\u0433\u0434\u0430 \u0434\u0430\u043d\u043d\u044b\u0445 \u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e, \u0432\u0435\u0440\u043d\u0438 JSON {\"answer\":\"\u043e\u0442\u0432\u0435\u0442 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044e \u043d\u0430 \u0440\u0443\u0441\u0441\u043a\u043e\u043c\"}.\n{{ end }}{{ range .Messages }}{{ if eq .Role \"tool\" }}<|observation|>\n{{ .Content }}{{ else }}<|{{ .Role }}|>\n{{ if .ToolCalls }}{{ range .ToolCalls }}{\"name\":\"{{ .Function.Name }}\",\"arguments\":{{ json .Function.Arguments }}}{{ end }}{{ else }}{{ .Content }}{{ end }}{{ end }}{{ end }}<|assistant|>\n",
+      "parameters": "num_ctx                        32768\nnum_predict                    2048\nstop                           \"<|system|>\"\nstop                           \"<|user|>\"\nstop                           \"<|assistant|>\"\nstop                           \"<|observation|>\"\ntemperature                    0",
+      "details": {
+        "parent_model": "glm4:9b",
+        "format": "gguf",
+        "family": "chatglm",
+        "families": [
+          "chatglm"
+        ],
+        "parameter_size": "9.4B",
+        "quantization_level": "Q4_0",
+        "runner": "llamacpp"
+      }
+    }
+  },
+  "source_sha256": {
+    "src/benchmark/metrics.py": "cd4d02e147c57c34484d0f7428efadd70f96cd112fba10d17396169f8c44b55f",
+    "src/benchmark/runner.py": "20becb22d83bfe9d6bd248eb6d798f49dcf2962853de9d874c2f98527d9b82a5",
+    "src/benchmark/own_agent.py": "688a17b28d37c6ba24c6174e2328a8efd06a95c0f91c228f516efcf1286373a2",
+    "src/benchmark/recording.py": "60cf6984923caa2b096969effa7b6dd5ba6e30598635539bd046fe74a0ea0edd",
+    "src/benchmark/checks.py": "3bc4227e984d48a7d4b3b1ec4e446d24b3a9b41d2ba2ba70c5603ecae7ce8d75",
+    "src/benchmark/policy.py": "3b8ecb26f3cc491c5126bfec1facf8f9ac83d0dd080b3de7711becd671a87692",
+    "src/benchmark/figure.py": "2d5053b8929760a8917c96f9dd031bba0ec7414fb472cda91e85d1ae28b78117",
+    "src/benchmark/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/benchmark/finalize.py": "137ef5a6d7a473bc4e7bb9339bf7e8c7ad63d58fe7a42a2972ade5484059ccc0",
+    "src/benchmark/cluster.py": "1055fa3eb82df7e80bd896ebc475286bd935a52a371e9014859650abf090af59",
+    "src/benchmark/judge.py": "72eac92fc9806899f4de8d2661a1e5d2f7a305752b8c6627bffd94bf636b7b22",
+    "src/benchmark/dialogue.py": "fdc2ad2a37ef9817e83094288791eb3487a2e8a96e0755355a12c805a19c2405",
+    "src/benchmark/__main__.py": "12950aa043a7623e4c05b333b2ef0e20a554ad636ccf9e1514faf85e19f03bed",
+    "src/benchmark/report.py": "9aab902bf970d22ba560f90ddcc73ba66e0997bbffde6be1585d9ae01e1e634e",
+    "src/benchmark/prepare.py": "939f5b202e158a0a4e6d6a124ca98bd487ad8148b69ab809e5b91f6e601c13b3",
+    "src/benchmark/fixtures.py": "b0d58b01204b65586e21ec45bd42d8ed12686b0f00bfa66cc7765b0be8ed906b",
+    "src/agent/config.py": "879bc6f0673daec250e6d49eac34a9aa6cff2d7d7bfdc89b0d29811d933847df",
+    "src/agent/memory.py": "fef4d06812742c531fdcc9a03ac1a4307a13b5c6b2b6bda428760719b07098c7",
+    "src/agent/graph.py": "713354b5153017d8900d2fca2fa3dd326916a60d346fda1ee043c9e9177e272f",
+    "src/agent/__init__.py": "759893ee22b18b735808d70b715cb83e378ffdc4be86cc680b851b63e4256c4c",
+    "src/agent/tool_response.py": "b1a9acb0f1a661dde1c842a70bf4dca1de01644fbf80a886372e2c147af8780e",
+    "src/agent/model.py": "22cdf1f42dd2d436013c82663e6277aef49d303874763f124a3ffd7b3d0d6ff4",
+    "src/agent/tokenizer.py": "3ce8461f281e8ec5c07410cd1c514d6b0092045747e71357bcafb6ce4afe17b3",
+    "src/agent/context.py": "657ae02851a13cfa4f5b1aaec53ec13925a51b0ec64f4d03cee65cac25bbdcc9",
+    "src/agent/cli.py": "e159566b6edfe603a4b4f643880965494a1760cc378b20c65c731a8e50007b02",
+    "src/agent/routing.py": "77f3fca01143fbdab94b3690e8e84061d25fc72153dc4518d18ecc54a48f3785",
+    "src/agent/dialogue.py": "903150cb73594678bdd004fce27b726905dcfc42dac369da13399bf632369516",
+    "src/agent/nodes.py": "5bb0d9c4e026c9fb1877d32e6163dce1f95c45cdb274ff90287aefe54b8a4339",
+    "src/agent/__main__.py": "b1c844ebb273785e2e628cc7b6529c62bd0cd630895a4ea006a742e05bc7f80f",
+    "src/agent/state.py": "47539d2e872302eda991a788d3e6a3f517cdc7c3628dfd38e2a28bba40aaa063",
+    "src/agent/history.py": "a1c4b973cd2706ebf12e407589d8117a753fa597b21471854fd06d115662f210",
+    "src/opencode_agent/tracing.py": "631f8aff689b25f5b83ef241611e08bb475df6b06270570815fcd37d03a0ef81",
+    "src/opencode_agent/gateway.py": "2451a031d1404e4ad27bec1ea9bcbe7d371efa74b9fbe4d7df778b86c3b8d417",
+    "src/opencode_agent/server.py": "d961da255adc8c5df62c3c5885687c05a899fe6d4aba5d190c986a0cfbf1be6f",
+    "src/opencode_agent/config.py": "c351be046a1f9394dd0a3ace567206ff51950e5ceb74a8c5b5d6766cf7422702",
+    "src/opencode_agent/session.py": "643edaf43b2fb651a9e8540f4dfbf104e1dcb2067ef9a9f7f8469a0815da70ae",
+    "src/opencode_agent/__init__.py": "a96ac4c6ec21e1c3768ab14e255f2c9328c73e53e1e06bcf25e27dc705c94989",
+    "src/opencode_agent/native_tracing.py": "ce712c280d66b34c22b58f6ac7d8bc1398468ef722ddefa04792380b8c48af25",
+    "src/opencode_agent/mcp.py": "777bde31efd5347e62c0b1ca299ff009b7dd452a03769102c02c41b205f10aed",
+    "src/opencode_agent/__main__.py": "ebda9e14bc8b03dd014b3f02d8b7df7078a9fab25a8d13dfbeddd151cca5cf86",
+    "src/agent/tools/resource_summary.py": "f61329b01deaa7f56f01800473952b646ee2505254ef02f963c2d815a9358c5e",
+    "src/agent/tools/config.py": "b430401402c90a6c84413b20a164a39d47bef468cbd75a4a8d6e856952cea8f5",
+    "src/agent/tools/__init__.py": "237f3f6c9ba57a77175eb44fca3bcc5a712eb5f1c8e22faf70418877aa3618d1",
+    "src/agent/tools/mcp.py": "10346c1b5951ffbe4c5927703f4c644328af2bc6188f2a578434fed196957baf",
+    "src/agent/tools/retrieval.py": "e448000bd2142c201ae38368241993f2c699834543877905334cd1220b26c1d9",
+    "src/agent/tools/deployments.py": "480aa1bed4df24394b0df87b1c1b5324dccd66e3395666d60591b2db39e01694",
+    "prompts/tools.json": "6eb4fa804da8e0833415651942082653124ded7e52f9ea2c9a65d72a22adb2bb",
+    "prompts/chat_template.jinja": "21f545abef213509ec757a478e616d7fdec653c38865045bbe9484f621a21cc2",
+    "prompts/system.md": "bfeb427e617142e835b003b0ce3b734f2c9734db40f3b7a201fcdeb3d4153144",
+    "opencode/package-lock.json": "dce032b8bf831edb18a385a164d1b8381f6dfe2aba759ce0706bde2cdbf846cb",
+    "opencode/Modelfile": "11dd0b67132e9ab533371f7b25e42a7e402591baefab87fa885bb42d2446d85d",
+    "opencode/compaction.md": "db4a98eeba044b1f5c35f478c19d69d68335ed769a6385d16ce98ae48829a5cc",
+    "opencode/reply.md": "ea3d9ee0e8fc624a26e089c6e7dc29853153f33fe69f84450407b8e17b86c15b",
+    "opencode/README.md": "44b90c694f4372ed74498d3aed5fba2c69171a96711d3377340eabb07c988cea",
+    "opencode/system.md": "5b34e84052f5bb620b8f1b3f21aa7560fcaf3231e026b1cacbbe9ed1a80b7e24",
+    "opencode/opencode.json": "b66b68d656a736d55ff2ba95e21285716f14bdef66091fc8b45470893fcb01bf",
+    "requirements.txt": "57402980aa77de69cc4127d73cf53af97ef5fc749660ae36ab9892e5e5999509",
+    "infra/k3d.yaml": "db3569a4c79bf10c1783ae848d46e769101c3e794cf8875e1ddcb22c954168ab",
+    "infra/Modelfile": "7624441dd71cbba66a01169c3ccf73045ce418c26f9afcb4c289eea22633434b",
+    "infra/workload.yaml": "cd15d1831be2155e12adac758575c07997db6f1b13cf1ffa9d50386e165e8dc5",
+    "infra/rbac.yaml": "9ec467a5a9d78a9d4bd34b9fd46402ee6682614bb7d8a495c8fd44d1ae7a74df",
+    "infra/kubernetes-mcp.toml": "b68f45c9f940c3f4d2a66a94954dc0504d2986fec4e6bf0b5c4003579aaa5f2f",
+    "evaluation/fixture_app/server.py": "6f2de7b271d2dcbb737c8b04a87abd8cc52c0c28178e75721bf2755a86e23fed",
+    "evaluation/fixture_app/Dockerfile": "138d87c3bcb90709ad50f889ea6aee48e0481aae8155e7f4655d5b56343d7260",
+    "evaluation/judge.md": "f6365e1840e65c04942665c8ea471cc4ab208eb7161f5205eadbfcd6ce5dfa50",
+    "evaluation/scenarios.json": "c27a2741a1fee94d74175ca6d03f6fb7dd711ff13bea678fc0781f1f3f8c2b61",
+    "evaluation/criteria.json": "2676631ce1699befeff0e36b8facf7de42f3399223bf1d91053778d7e64a00ee"
+  },
+  "resources": {
+    "observed_at": "2026-11-06T14:58:08Z",
+    "physical_memory_bytes": 25769803776,
+    "docker_memory_limit_bytes": 16749006848,
+    "swap_used_mib_approx": 12451,
+    "container_memory_gib_approx": 5.8,
+    "note": "Snapshot during own-agent evaluation; elapsed times depend on local memory pressure and caches.",
+    "cpu": "Apple M4",
+    "node_version": "25.5.0",
+    "opencode_version": "1.19.5",
+    "ollama_version": "0.40.13"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "run_id": "comparison-18",
+  "agents": {
+    "own": {
+      "tasks": 18,
+      "turns": 54,
+      "checked": 30,
+      "successes": 7
+    },
+    "opencode": {
+      "tasks": 18,
+      "turns": 54,
+      "checked": 30,
+      "successes": 9
+    }
+  },
+  "unique_turn_traces": 108,
+  "unique_sessions": 36,
+  "reviewed_checked_turns": 60,
+  "native_token_totals_match": true,
+  "same_model_weights": true,
+  "warnings": [
+    {
+      "agent": "own",
+      "task": "a24",
+      "turn": 10,
+      "model_error": "Invalid JSON at output limit, preserved as agent failure"
+    },
+    {
+      "task": "a24",
+      "turn": 6,
+      "extra_generation_observations": 4,
+      "explanation": "Cancelled or empty provider requests without usage; token totals match"
+    },
+    {
+      "task": "a24",
+      "turn": 10,
+      "extra_generation_observations": 1,
+      "explanation": "Cancelled or empty provider requests without usage; token totals match"
+    },
+    {
+      "task": "a24",
+      "turn": 12,
+      "extra_generation_observations": 4,
+      "explanation": "Cancelled or empty provider requests without usage; token totals match"
+    }
+  ]
+}

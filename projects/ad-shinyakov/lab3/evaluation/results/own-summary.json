@@ -1,0 +1,21 @@
+{
+  "tasks": 18,
+  "fixture_errors": 0,
+  "success_rate": 0.3888888888888889,
+  "turn_success_rate": 0.5,
+  "strict_success_rate": 0.3888888888888889,
+  "single_success_rate": 0.4444444444444444,
+  "dialogue_success_rate": 0.3333333333333333,
+  "history_accuracy": 0.4166666666666667,
+  "history_before_compression": 0.5555555555555556,
+  "history_after_compression": 0,
+  "mean_task_latency_seconds": 243.2688140671065,
+  "mean_task_cost_usd": 0,
+  "input_tokens": 753863,
+  "output_tokens": 10776,
+  "compression_attempts": 24,
+  "compression_successes": 24,
+  "generations_without_usage": 0,
+  "error_rate": 0.3888888888888889,
+  "trace_url": "http://localhost:3000/project/kubernetes-agent/traces/29b437e3f10067183f7c54f59101f055"
+}

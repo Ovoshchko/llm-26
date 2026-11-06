@@ -1,0 +1,12 @@
+{{- '[gMASK]<sop>' -}}
+{%- if tools -%}
+{{- '<|system|>\nДоступные инструменты:\n' -}}
+{{- tools | tojson(ensure_ascii=False, separators=(',', ':')) -}}
+{{- '\nЧтобы вызвать инструмент, верни только JSON: {"name":"имя_инструмента","arguments":{параметры}}.\nВызывай только один инструмент за раз. Не добавляй пояснения к JSON вызова.\nНе используй Markdown, тройные обратные кавычки или блоки кода для вызова.\nВсе обязательные arguments из схемы должны присутствовать, включая name ресурса.\nПример: {"name":"resources_get","arguments":{"apiVersion":"apps/v1","kind":"Deployment","namespace":"agent-lab","name":"имя_из_запроса"}}.\nРезультат поступит отдельным сообщением observation. Не придумывай его.\nКогда данных достаточно, верни JSON {"answer":"ответ пользователю на русском"}.\n' -}}
+{%- endif -%}
+{%- for message in messages -%}
+{{- '<|' + message['role'] + '|>\n' + message['content'] -}}
+{%- endfor -%}
+{%- if add_generation_prompt -%}
+{{- '<|assistant|>\n' -}}
+{%- endif -%}

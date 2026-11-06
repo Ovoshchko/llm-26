@@ -1,0 +1,20 @@
+FROM glm4:9b
+TEMPLATE """[gMASK]<sop>{{ if .Tools }}<|system|>
+Доступные инструменты:
+{{ json .Tools }}
+Чтобы вызвать инструмент, верни только JSON: {"name":"имя_инструмента","arguments":{параметры}}.
+Вызывай только один инструмент за раз. Не добавляй пояснения к JSON вызова.
+Не используй Markdown, тройные обратные кавычки или блоки кода для вызова.
+Все обязательные arguments из схемы должны присутствовать, включая name ресурса.
+Пример: {"name":"resources_get","arguments":{"apiVersion":"apps/v1","kind":"Deployment","namespace":"agent-lab","name":"имя_из_запроса"}}.
+Результат поступит отдельным сообщением observation. Не придумывай его.
+Когда данных достаточно, верни JSON {"answer":"ответ пользователю на русском"}.
+{{ end }}{{ range .Messages }}{{ if eq .Role "tool" }}<|observation|>
+{{ .Content }}{{ else }}<|{{ .Role }}|>
+{{ if .ToolCalls }}{{ range .ToolCalls }}{"name":"{{ .Function.Name }}","arguments":{{ json .Function.Arguments }}}{{ end }}{{ else }}{{ .Content }}{{ end }}{{ end }}{{ end }}<|assistant|>
+"""
+PARAMETER temperature 0
+PARAMETER stop "<|system|>"
+PARAMETER stop "<|user|>"
+PARAMETER stop "<|assistant|>"
+PARAMETER stop "<|observation|>"

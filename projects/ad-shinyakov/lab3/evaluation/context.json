@@ -1,0 +1,7 @@
+{
+  "context_limit_tokens": 8192,
+  "model_context_window": 32768,
+  "max_output_tokens": 2048,
+  "tokenizer_model": "zai-org/glm-4-9b-chat-hf",
+  "tokenizer_revision": "8599336fc6c125203efb2360bfaf4c80eef1d1bf"
+}

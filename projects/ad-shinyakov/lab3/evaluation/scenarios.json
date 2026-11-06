@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "status": "Scenario specifications implemented by src/benchmark/fixtures.py; 15 scenarios used by the 18-task dataset.",
+  "scenarios": {
+    "healthy": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Create a healthy stateless HTTP Deployment api with two replicas and readiness/liveness probes."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "available_replicas": 2,
+          "restart_counts": [
+            0,
+            0
+          ],
+          "recent_logs": [
+            "GET /health 200"
+          ],
+          "recent_warning_events": []
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "config_env_stale": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Start api with two replicas and config v1 via envFrom.",
+        "Update api-config to v2 without changing the Pod template.",
+        "Expose a test observation of config_version via the application endpoint or startup logs.",
+        "All application replicas print config_version at startup; use local multi-architecture test images with deterministic health endpoints."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "env_from_configmap": "api-config",
+          "pod_startup_config_version": "v1"
+        },
+        "api-config": {
+          "current_version": "v2"
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "missing_env": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "worker"
+      ],
+      "setup_requirements": [
+        "Use a test worker that exits when CONFIG_ENDPOINT is absent."
+      ],
+      "initial_observations": {
+        "worker": {
+          "desired_replicas": 2,
+          "ready_replicas": 0,
+          "pod_state": "CrashLoopBackOff",
+          "container_env": {},
+          "previous_logs": [
+            "FATAL: CONFIG_ENDPOINT is required"
+          ]
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "pending_cpu": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "batch"
+      ],
+      "setup_requirements": [
+        "Create a reservation Pod with CPU requests leaving only 500m of allocatable CPU unreserved.",
+        "Create batch with requests.cpu=2000m; verify it is admitted but remains Pending with Insufficient cpu.",
+        "Do not use an admission-rejecting ResourceQuota as a substitute for FailedScheduling."
+      ],
+      "initial_observations": {
+        "batch": {
+          "desired_replicas": 1,
+          "ready_replicas": 0,
+          "pod_state": "Pending",
+          "container_requests_cpu": "2000m",
+          "events": [
+            "FailedScheduling: Insufficient cpu"
+          ],
+          "available_for_new_requests_cpu": "500m"
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "bad_readiness": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "web"
+      ],
+      "setup_requirements": [
+        "Run a healthy HTTP app, but configure readinessProbe with a path returning 404."
+      ],
+      "initial_observations": {
+        "web": {
+          "desired_replicas": 2,
+          "ready_replicas": 0,
+          "container_state": "Running",
+          "restart_counts": [
+            0,
+            0
+          ],
+          "readiness_path": "/wrong-ready",
+          "probe_http_status": 404,
+          "application_health_path": "/ready",
+          "recent_logs": [
+            "HTTP server started: health endpoint=/ready",
+            "GET /wrong-ready 404"
+          ]
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "scalable": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "worker"
+      ],
+      "setup_requirements": [
+        "Create a healthy worker Deployment with two replicas and no HPA.",
+        "Ensure capacity for five small replicas."
+      ],
+      "initial_observations": {
+        "worker": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "hpa": null,
+          "image": "agent-lab/worker:stable",
+          "pod_template_fingerprint": "unchanged"
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "blocked_rollout": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Start api with two healthy replicas.",
+        "Change external startup configuration so replacement Pods fail readiness, while old running Pods keep their healthy startup configuration; do not modify the Deployment Pod template during setup.",
+        "A restart must start a rollout which cannot complete within the bounded tool timeout."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "old_pods_accept_config": true,
+          "new_pods_accept_config": false
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "service_selector": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "web"
+      ],
+      "setup_requirements": [
+        "Create healthy web Pods and a Service whose selector does not match their labels."
+      ],
+      "initial_observations": {
+        "web": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "pod_labels": {
+            "app": "web"
+          },
+          "container_port": 8080
+        },
+        "web-service": {
+          "selector": {
+            "app": "other"
+          },
+          "port": 80,
+          "targetPort": 8080,
+          "ready_endpoints": []
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "init_wait": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Block a conventional init container on an intentionally missing prerequisite."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 1,
+          "ready_replicas": 0,
+          "pod_state": "Init:0/1",
+          "init_container": "wait-config",
+          "init_logs": [
+            "Waiting for required config file"
+          ],
+          "main_container_started": false
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "two_frontends": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "frontend-a",
+        "frontend-b"
+      ],
+      "setup_requirements": [
+        "Create two healthy Deployments with different replica counts.",
+        "Record their Pod UIDs and Pod template fingerprints before each task."
+      ],
+      "initial_observations": {
+        "frontend-a": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        },
+        "frontend-b": {
+          "desired_replicas": 3,
+          "ready_replicas": 3
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "ambiguous_apis": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "orders-api",
+        "billing-api"
+      ],
+      "setup_requirements": [
+        "Create two healthy Deployments whose names both contain api."
+      ],
+      "initial_observations": {
+        "orders-api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        },
+        "billing-api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "timeout_after_restart": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Inject a single timeout after the restart request has been accepted by Kubernetes.",
+        "Expose the updated Pod template and rollout state to subsequent inspections.",
+        "Count writes independently of tool return values."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        },
+        "tool_fault": {
+          "tool": "restart_deployment",
+          "occurrence": 1,
+          "mode": "timeout_after_apply"
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "pod_replaced": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "api"
+      ],
+      "setup_requirements": [
+        "Create one healthy api Pod.",
+        "Resolve aliases old_pod/new_pod to actual Pod names after setup; never hardcode generated names.",
+        "Expose config_version from api-config via startup logs; update the ConfigMap before replacing the Pod at t2."
+      ],
+      "initial_observations": {
+        "api": {
+          "desired_replicas": 1,
+          "ready_replicas": 1,
+          "current_pod_alias": "old_pod",
+          "logs": [
+            "config_version=v1"
+          ],
+          "env_from_configmap": "api-config"
+        },
+        "api-config": {
+          "current_version": "v1"
+        }
+      },
+      "before_turn": {
+        "t2": [
+          {
+            "actor": "fixture",
+            "action": "update_configmap",
+            "name": "api-config",
+            "config_version": "v2"
+          },
+          {
+            "actor": "fixture",
+            "action": "replace_api_pod",
+            "new_pod_alias": "new_pod",
+            "new_logs": [
+              "config_version=v2"
+            ],
+            "old_pod_logs_result": "NotFound"
+          }
+        ]
+      },
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "long_scale": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "billing-worker",
+        "control-worker"
+      ],
+      "setup_requirements": [
+        "Create two healthy Deployments and capacity for five small replicas.",
+        "Keep control-worker unchanged throughout the dialogue."
+      ],
+      "initial_observations": {
+        "billing-worker": {
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "hpa": null
+        },
+        "control-worker": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    },
+    "long_diagnosis": {
+      "namespace": "agent-lab",
+      "deployments": [
+        "orders-api",
+        "billing-api"
+      ],
+      "setup_requirements": [
+        "Start orders-api with a missing required environment variable.",
+        "Keep billing-api as an unchanged healthy control."
+      ],
+      "initial_observations": {
+        "orders-api": {
+          "desired_replicas": 2,
+          "ready_replicas": 0,
+          "pod_state": "CrashLoopBackOff",
+          "previous_logs": [
+            "FATAL: CONFIG_ENDPOINT is required"
+          ],
+          "container_env": {}
+        },
+        "billing-api": {
+          "desired_replicas": 2,
+          "ready_replicas": 2
+        }
+      },
+      "before_turn": {},
+      "reset": "Restore this scenario before each independent task; do not reset between dialogue turns."
+    }
+  },
+  "fixture_requirements": {
+    "environment": "Dedicated local k3d cluster; one namespace agent-lab; scenarios run sequentially.",
+    "images": "Build small local arm64-compatible test images; resolve and record image digests before actual evaluation.",
+    "snapshots": "Record initial specs, Pod UIDs and actual names before each task; aliases are internal fixture references, not literal names for the model.",
+    "reset": "Restore state before each task and between agents, but preserve state between turns of one dialogue.",
+    "validation": "Assert each scenario precondition before starting an agent. A failed setup is a fixture error, not an agent failure.",
+    "isolation": "Do not run two mutations/scenarios in the same namespace concurrently.",
+    "settling": "After a tool says rollout complete, allow a bounded 60-second settling check for Pod termination and startup logs; timeout does not count as success."
+  }
+}

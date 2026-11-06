@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "tasks_sha256": "8c5a266356ed740e6caa2f35bc5abd8b551ea712657f703dbe38f801fee72f42",
+  "scenarios_sha256": "c27a2741a1fee94d74175ca6d03f6fb7dd711ff13bea678fc0781f1f3f8c2b61",
+  "context_sha256": "19ef785575f8a1d5ca3d98854a1e1e2f01637f4900b8204692c0438ba8218c2d",
+  "task_count": 18,
+  "types": {
+    "single": 9,
+    "dialogue": 9
+  },
+  "difficulty": {
+    "easy": 3,
+    "hard": 8,
+    "medium": 7
+  },
+  "dialogue_count": 9,
+  "long_dialogue_count": 2,
+  "context_limit_tokens": 8192,
+  "tokenizer": {
+    "model": "zai-org/glm-4-9b-chat-hf",
+    "revision": "8599336fc6c125203efb2360bfaf4c80eef1d1bf"
+  },
+  "long_dialogues": [
+    {
+      "task_id": "a23",
+      "turn_count": 15,
+      "user_only_tokens": 15960,
+      "largest_user_message_tokens": 1326,
+      "first_user_only_overflow_turn": 9,
+      "checked_turn_user_only_tokens": {
+        "1": 50,
+        "2": 91,
+        "15": 15960
+      }
+    },
+    {
+      "task_id": "a24",
+      "turn_count": 15,
+      "user_only_tokens": 15985,
+      "largest_user_message_tokens": 1325,
+      "first_user_only_overflow_turn": 9,
+      "checked_turn_user_only_tokens": {
+        "1": 55,
+        "2": 102,
+        "15": 15985
+      }
+    }
+  ],
+  "reference_documents": [
+    "docs/concepts/architecture/nodes.md",
+    "docs/concepts/configuration/configmap.md",
+    "docs/concepts/configuration/liveness-readiness-startup-probes.md",
+    "docs/concepts/configuration/manage-resources-containers.md",
+    "docs/concepts/services-networking/service.md",
+    "docs/concepts/workloads/controllers/deployment.md",
+    "docs/concepts/workloads/pods/init-containers.md",
+    "docs/concepts/workloads/pods/pod-lifecycle.md"
+  ],
+  "scope": "Dataset structure and user-only token lower bounds validated. No live cluster, agent or QA evaluation was run."
+}
